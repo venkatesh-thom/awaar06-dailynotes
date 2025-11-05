@@ -1,0 +1,374 @@
+ISP : Internet Service Provider : Act, Airtel, jio, Pioneer...
+CSP : CLoud Service Provider : AWS, Azure, GCP, Rackspace, Alibaba, Fujitsu..
+
+CSP Provide Infra over Internet..
+
+Infrastructure : 
+
+
+Web Server (nginx+apache) + App Server (App logic) + Database Server (user sensitive info) + Storage Server (SAN/NAS - S3, Blob)
+
+Network + Firewall
+
+--> Scaling (Adding more resources or more servers)
+
+Vertical Scaling : Adding More resources to the same server/db
+Horizontal Scaling : Adding More servers to perform the same job
+
+LoadBalancer : Distributes the traffic across the healthy resources..
+
+--> Server IP / Load Balancer IP ==> DNS ==> Domain Name map
+
+
+Pay-as-you-Go : Pay for the resources you actually use... (5 min --> 5 min)
+Pay-as-you-Grow : Increase your server capacity based on your work load and 
+pay for the capacity you use.. 
+
+======
+
+AWS Global Infrastructure : 
+
+Regions : No technical Defination available for this word called "region".. Its a physical or geographical area, aws segregated entire world into regions.. 38 Regions (as of Nov 2025)
+mumbai : ap-south-1
+Hyd : ap-south-2
+
+Availability Zones : AZ / Availability Zone is nothing but a Data Center or combination of DCs.. 120 Availability Zones as of Nov 2025.. 
+Mumbai : 3 AZs : ap-south-1a, ap-south-1b, ap-south-1c
+Hyd : 3 AZs : ap-south-2a, ap-south-2b, ap-south-2c
+
+
+EDGE Locations : CDN (Content Delivery Network) : Cloudfront : 700+ Point of presence or Edge locations across the globe.. Desined to store the data temporarily, near to end customers geographical location, to deliver the data without latency.. 
+
+
+Latency : Time to get response from the server.. 
+
+
+Windows : tracert google.com
+
+Linux : traceroute google.com
+
+===
+
+Enable MFA on your root account for better security.. 
+
+
+root user : root user will have unrestricted access on our AWS accounts.. He can do anything.. Launch instance, delete database, delete data.. change credit card.. change support plan.. close account..
+
+3 Members working on AWS.. 
+
+1 --> Lead --> All Services Access
+2 --> Data Admin --> S3, RDS
+3 --> Network Activies --> VPC, Transit Gateway, VPN
+
+
+IAM User : Identity and Access Management : We can create users.. We can allocate permissions (Policy) based on his job roles.. 
+
+
+1 --> UN & PWD --> Lead --> All Services Access
+2 --> UN & PWD --> Data Admin --> S3, RDS Policy
+3 --> UN & PWD --> Network Activies --> VPC, Transit Gateway, VPN Policy
+
+Least Privilages Mechanism : Provide permissions to the user to perform his jub duties or activities.. Dont provide any addl permisisons..!!
+
+---
+
+https://828477980115.signin.aws.amazon.com/console
+
+https://avizway8.signin.aws.amazon.com/console
+
+aviz-dev
+aviz-uat
+aviz-prd
+aviz-tst
+
+---
+
+Account Password policy Setup : We can setup our custom password standards based on our org requirements. 
+** Dont choose to use same password for years. Configure pwd expirations..
+
+---
+
+Secure your account by Setting up "Strong Password", "never Share Cred to multiple members" and "Enable MFA"
+
+--
+
+Dont upgrade to paid plan.. Use free plan through out the course..
+
+--
+
+Billing Alart/Alarm : 
+
+
+SLA : Service Level Agreement : 
+
+Response SLA : When we raise any ticket, In what time we get response from the Service provider.
+Resolution SLA : When we raise any ticket, In what time we get a resolution from the Service provider.
+
+1) Account and billing related Queries.. Account Activation.. Credits.. Bill Dispute.. Account transfer..
+==> Free For Everyone.. 24x7 Phone, Email and Chat support available...
+
+2) Technical Assistance : EC2 / S3 / RDS / VPC...
+==> Depends on the support plan we have in our AWS account..
+
+
+Basic Support Plan : 
+--> No technical Assistance from AWS
+--> AWS Knowledge Base Articles
+--> Limited Trusted Advisor Checks.. 
+
+---
+
+Developer Support Plan : 
+--> Cost Starts from 29$/Month..
+--> Technical Assiatance provided within 12-24 local buisness hours (8AM-8PM) via EMail.
+--> AWS Associate will be allocated for Support.
+--> Only One user can raise support cases, but he can create unlimited cases.
+
+General Guidance : < 24 Hrs
+System Impaired : < 12 hrs
+
+---
+
+Business Support Plan : 
+--> Cost Starts from 100$/Month..
+--> Technical Assiatance provided within 1 hour, 24x7 via EMail, Chat and Phone.
+--> AWS Associate/Engineer will be allocated for Support.
+--> Any user can raise support cases, and we can create unlimited cases.
+
+General Guidance : < 24 Hrs
+System Impaired : < 12 hrs
+Production System Impaired : < 4 hrs
+Production System Down : < 1 Hr
+
+---
+
+Enterprise Support Plan : 
+--> Cost Starts from 15,000 $/Month..
+--> Technical Assiatance provided within 15 Minutes, 24x7 via EMail, Chat and Phone.
+--> AWS Sr. Engineer will be allocated for Support.
+--> Any user can raise support cases, and we can create unlimited cases.
+--> Dedicated TAM "Technical Account manager"
+--> Annual "Architectural Review" and "Operational Review"..
+
+General Guidance : < 24 Hrs
+System Impaired : < 12 hrs
+Production System Impaired : < 4 hrs
+Production System Down : < 1 Hr
+Business/Mission Critical system down : < 15 Min
+
+
+Enterprise on-ramp : 
+--> Cost Starts from 5,500 $/Month..
+Business-critical system down: < 30 minutes
+--> A pool of TAMs will be available
+
+---
+
+Basic, Developer and Business Support PLans : Applicable for Individual accounts.. (3 x 100 = 300$ Business)
+Enterprise / Enterprise on-ramp.. (1000 --> 1 support plan is sufficient)
+
+---
+---
+
+
+Requirement : We are using Storage service extensively, We need a dedicated staorage engineer to manage s3 service.
+
+IAM Users will have 2 types of Accesses
+1. AWS Management console access (Username, Password and Sign-In URL) : Browser login
+2. Programatic Access (AccessKeyID and SecretAccess Key) : AWS CLI Install --> Command Prompt
+
+
+Implict Allow : If we provide S3 Access to a user, he can access only s3 service, he cannot access any other service.. Remaining all services access will be debied..
+
+
+Explicit Deny : 
+
+
+---
+
+==> How to secure your root account.?
+==> What support plan you are using in your current project.?
+==> IAM Permisisons
+
+
+---
+
+Policy : Contains set of permisisons on AWS environment. Writtens in JSON format. 
+
+AWS Managed : AWS provided this based on the service we have. We cannot edit or Delete these policies.
+
+AWS Managed - Job Functon : AWS provided this based on the standard jobs we have. We cannot edit or Delete these policies.
+DBA : Database (full), Storage (limited), Server (Read)
+Network Admin : VPC (full), Server (Read)
+
+Customer Managed : We can create our own policies, depends on our requirements. We can delete/edit. AWS maintains versions.
+
+---
+
+Requirement : I need a policy to allow user to access "S3 and EC2" with Custom Policy.. 
+
+Service : The AWS service the policy targets (S3, ec2, rds)  				: S3, ec2
+Effect : The result of the policy, it can be "Allow" or "Deny"				: Allow
+Actions : The operations permitted or denied. (upload, download)			: *
+Resources : The specified resources the policy applies to (bucket/server)	: *
+
+---
+
+Requirement 2 : I need an IAM user, He need Full/all services Access (AdministratorAccess), but He should not access S3 as it contains some sensitive info.
+
+Service : The AWS service the policy targets (S3, ec2, rds)  				: *
+Effect : The result of the policy, it can be "Allow" or "Deny"				: Allow
+Actions : The operations permitted or denied. (upload, download)			: *
+Resources : The specified resources the policy applies to (bucket/server)	: *
+
+Service : The AWS service the policy targets (S3, ec2, rds)  				: S3
+Effect : The result of the policy, it can be "Allow" or "Deny"				: Deny
+Actions : The operations permitted or denied. (upload, download)			: *
+Resources : The specified resources the policy applies to (bucket/server)	: *
+
+---
+
+AdministratorAccess = He will full access on all the services we have in AWS. Equailant to root user, but without account management.
+
+--
+
+Conflict : Administrator Access is allowing S3 and Deny-S3 policy is denying S3.. Effect: ???
+
+** You allow 100 times (user, group, resources), but denied 1 time = "Deny" will take effect
+
+
+--
+
+--> Policy supportsd max of 6,144 Charectors
+--> A user can have max 20 managed policies.
+
+Inline Policies : its directly embedded into a single user or group. We cannot reuse these policies.
+
+--> Not reusable
+--> Difficult to track
+
+---
+
+Policy Simulator : helps to simulate the user permissions for the given action.., Smal handy tool for IAM permisisons evaluation..
+The simulator evaluates the policies that you choose and determines the effective permissions for each of the actions that you specify.
+
+---
+
+How to track IAM user activities.?
+Ans : Cloudtrail.. We can track all IAM user activities (inclusing Refresh).. Enabled in every account, by deafult.. Free.. 
+
+**With Cloudtrail, we cannot track ec2/Network traffic.. "VPC FlowLogs"
+---
+
+Access Analyser : 
+
+External access findings : Identify resources shared with an external entity (Free)..
+Internal access findings : Identify internal IAM users and roles that can access specific resources
+Unused access findings : Identify IAM users and roles with unused access
+
+---
+
+Credential report : Helps to get user information (i.e; last loggedin, user created, last password used, Accesskey..) : The credentials report lists all your IAM users in this account and the status of their various credentials. After a report is created, it is stored for up to four hours.
+
+ARN : Amazon Resource Name : THis gives uniqueness to the resources we have in our AWS account.. 
+
+---
+
+Requirement 3 : I need an IAM user, This user required full access on S3 Service, But, He should be able to access s3 only from corporate network.
+
+https://checkip.amazonaws.com/
+
+49.206.53.190/32 
+
+---
+
+IAM User : 2 Types of Access.. 
+
+1. Management console Access : Username, Password and SignURL : Browser 
+2. AWS CLI (Comamnd Line Interface) Access : AccesskeyID and Secret Access key : Install AWS CLI Tools (Windows/Linux/Mac)
+
+https://aws.amazon.com/cli Download and install cli tools in your laptop
+
+aws --version
+
+aws configure
+
+Accesskey : 
+SecretAccesskey : 
+Region : ap-south-1
+output : json/table/text
+
+
+aws sts get-caller-identity
+
+aws ec2 describe-instances --region ap-south-2 --output table
+
+aws s3 ls
+aws s3 mb
+
+Amazon Q CLI : AI powered Agentic based CLI tool to manage all operations.
+--> It uses/interact with Amazon bedrock in backend.
+
+
+Create an IAM user with username "avinash-test-05112025", attach aws managed "S3FullAccessPolicy", set a temporary password as "temp@12341" and enforce the user to create a new password when login for the first time.
+
+
+Agent : 
+I need an agent to perform below operations..
+Purpose: Check AWS resources and generate reports daily basis
+Tools: use_aws, fs_write
+Generate report : Show AWS integrations, business values and security recommendations
+
+
+
+
+
+https://avinash.s3.amazonaws.com/aws.pdf
+
++91-7997777597 (11:00 AM IST)
+
+
+avizacademy.com/payments.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
