@@ -1,0 +1,103 @@
+Server = Computer designed to process requests, store data and provide services/resources.
+
+Desktop / Laptop = Designed for day to day activities.. 
+Server = Designed to run always.. 
+
+CPU
+memory
+Network (NIC / WiFi / LAN)
+Graphic
+
+
+Web Hosting
+Database Hosting
+Gaming
+Email Server
+File/Storage Servers
+
+--> What are the components required to deliver a website to outside world. (instagram)
+
+
+Code (api)						--> CICD to automate
+Load balancer					--> ELB
+Server --> OS License			--> EC2
+Database --> Db license			--> RDS / DynamoDB
+Storage							--> S3
+Network (Firewall / switches)	--> VPC
+Security (Physical / SSL/TLS)	--> CM
+Domain name						--> Route53
+Cooling Systems
+Power (Redundant)
+Internet		
+
+
+EC2 : Elastic Compute Cloud : 
+
+Instance --> Server
+
+
+On-Demand Instances : Unpredictable Workloads.. SHort term testing.. 
+--> Charged based on actual usage (pay-as-you-go)
+--> More suitable to test our workload, if our workload has unpredictable access patterns..
+--> Workload that required flexibility to scale (upgrade/downgrade) the resources
+
+
+SDLC : Software Development Life Cycle :
+
+Training/Sandbix account : POC : Proof of concept  	--> Small
+Dev : Development									--> low conf
+QA : Testing										--> low
+UAT : Similar to Prod env							--> High conf
+PRD : Production / live								--> V High conf (1L Cu) --> 2L
+
+---
+
+B2B ==> Business to Business
+
+---
+
+Reserved Instances / RI : More suitable for prediuctable worklaods.. 
+--> We go to a reservation with AWS for 1 yr - 3 Yrs..
+--> We get this instances at low price, compared to on-demand
+
+Standard : No config changes allowed during the reservation period.
+Convertible : Config can be changed (instance family / OS Family).
+
+Payment option:
+Full Upfront : Pay all the money first and purchase your config. No monthly charges..
+Partial Upfront : Pay 40-70% now, AWS will reduce the hourly price.. Based on your usage, at reduced price, you get charged..
+No Upfront : No need to pay anything now, but have to pay monthly basis, based on usage..
+
+--> We can register as seller and sell our unused reserved ec2 instance hours via AWS Marketplace
+
+===
+
+Spot Instances : For flexible workloads with "NO CRITICAL DATA"
+--> We have to bid our price against AWS pricing.
+--> if our quoted price is equal to AWS spot price or higher than AWS spot price, AWS allocate the instance.
+--> Due to demand, if spot price increased than your quoted, AWS Terminate the resources with just 2 min interruption warning.
+--> We dont use this for unrecoverable or imporabnt workloads.
+--> To test vey high configs at low price.
+
+You Bid for an ec2 instance and you go the ec2 instance (Bid price : 0.50$).. You used this instance for 2 hours 45 minutes..
+
+--> Price Increased by AWS and Instance terminated... We will get charged for full hours .. No cost for partial hours.. (2 Hrs)
+--> No changes in Price, You done with your worload and you Instance terminated... We will get charged for total duration.. (2 hrs 45 min)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
