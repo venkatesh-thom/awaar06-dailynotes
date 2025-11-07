@@ -37,7 +37,7 @@ Instance --> Server
 
 
 On-Demand Instances : Unpredictable Workloads.. SHort term testing.. 
---> Charged based on actual usage (pay-as-you-go)
+--> Charged based on actual usage (pay-as-you-go) - PAYG
 --> More suitable to test our workload, if our workload has unpredictable access patterns..
 --> Workload that required flexibility to scale (upgrade/downgrade) the resources
 
@@ -84,12 +84,85 @@ You Bid for an ec2 instance and you go the ec2 instance (Bid price : 0.50$).. Yo
 --> Price Increased by AWS and Instance terminated... We will get charged for full hours .. No cost for partial hours.. (2 Hrs)
 --> No changes in Price, You done with your worload and you Instance terminated... We will get charged for total duration.. (2 hrs 45 min)
 
+----
+
+OS : AMI (Amazon Machine Image) : linux, Windows
+CPU / Processor & RAM /Memory : These 2 coponents comes as a bundle (Instance Type)
+Storage / Hard Disk : EBS (Elasic Block Storage) : SSD, HDD and Magnetic
+Network :  NIC/ ENI (Elastic network Interface) : 
+Firewall - Security Group (windows - RDP (3389), Linux - ssh(22))
 
 
+Step 1 : Add tags 
+
+Name : My-Windows-demo
+Project : WTC-project
+Client : C1
+Platform : Windows
+CostCenter : AAZAA
+
+Step 2 : Choose an AMI (Amazon machine Image) : Choose OS
+
+AMI : pre-configured template of an Operating System provided by AWS. We no need to install OS on H/W. AWS runs the selected AMI on selected Instance type.
 
 
+Step 3 : Choose an Instance Type
+
+General purposes : Balanced compute, memory and networking.. small and mid sized DB / Web apps.. (T, M)
+Compute optimised : for CPU intensive workload/tasks.. HPC, Batch Processing.. C4, C5, C6
+Memory optimised : memory intensive app.. DB, Distributed in memory workload.. r4, r5, x1, z1
+Storage Optimised : Better IOPS.. Distributed DB, graph DB.. i4, i3, d
+GPU Optimised : Graphic units.. Machiene learning, gaming, AI.. f1, p3, g
+
+m5.large
+c6.xlarge
+
+General purpose: M1 | M2 | M3 | M4 | T1 | T2
+Compute optimized: C1 | C3 | C4
+Memory optimized: R3 | R4 | X1 | X1e
+Storage optimized: D2 | H1 | I2 | I3
+Accelerated computing: F1 | G3 | P2 | P3
+
+Step 4 : Choose Keypair
+
+Public Key : Stores in AWS, AWS COpies inside ec2 instance (lock)
+Private Key : (.pem) : Download and store in our laptop. 
+
+Both the keys required to connect to ec2 instance. Designed for secure authentication with encryption.
+
+Step 5 : Choose network Settings
 
 
+Step 5 : Choose network settings
+
+--> Make sure to open required port based on your OS
+Windows --> 3389 --> RDP (Remote Desktop Protocol) --> Anywhere/Custom/myIP
+Linux --> 22 --> SSH (Secure Shell) --> Anywhere/Custom/myIP
+
+RDP --> Anywhere
+
+Step 6 : Choose Storage
+
+Go with the default storage for now.
+Root Volume --> A Volume that contains OS of our Instance.
+
+====
+
+
+MacOS : Navigate to AppStore --> Search "Windows App", Install it
+
+Windows : No addl software required..
+All windows laptops defaultly have "RDP tool"
+Open RUN (win + R) --> Type "mstsc" --> Click on enter
+Now, RDP tool opens --> Enter "pubic Ip" at Computer name field.
+Browse keypair and get the username and password, then enter that cred.. 
+
+
+Public IP : unique across the globe : 
+Private IP : unique within the network, Wont work outside of your network..
+
+1. Terminate : Delete : you dont need this instane and its data anymore..
+2. STOP : We have an option to start the instance again.. We dont loss any data.. 
 
 
 
