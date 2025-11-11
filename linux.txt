@@ -1,0 +1,69 @@
+Linux Directory Structure : 
+
+/ (Root Directory) : Top level directory, Parent of all directories.. Similar to c:\ in windows..  
+
+/root : Root user's home directory : its home directory of root user (superuser).. Similar to c:\Users\Administrator
+
+/home : User's home directory : The home directory of regular users (non root).. every user gets a home directory.. 
+
+/bin (binary executables) : contains all binary files used by all users.. all commands backend logics stores here..
+
+/boot (boot loader files) : Contains linux kernel and boot configurations.. Contains Essential files for OS booting.. 
+
+/dev (Device files) : Contains files that represents hardqre devices (Hard disks).. 
+
+/etc (Configuration files) : Stores system wide configurqtions.. (user pwd: /etc/passwd). System settings and service management related..
+
+/usr (user programs) : similar to "c:\program Files".. Contains installed programs and libraries..
+
+/sbin (system binaries) : system admin commands.. Only root user or super user can execute these comamnds..
+
+/var (Variable files) : Contains data that changes frequently.. (logs, messages)
+
+/mnt (mount points) ; Temp mount point for system
+/media (removable media) : usb, cd..
+/lib and /lib64 : Library files.. : similar to windows .dll files..
+/opt : optional or 3rd party software
+/tmp : temporary directory
+
+===
+
+whoami			--> Tell as what user you are working as
+hostname		--> Displays the instance/laptop/computer name
+uname			--> OS info
+cd				--> Change Directory
+pwd				--> Print working directory
+cd /			--> Change directory to linux root directory
+cd ..			--> Takes us to one directory back
+ls				--> List all the files and directories from current location
+ls -a			--> List hidden files/directories
+sudo su			--> Switch to root user
+sudo -i			--> Switch to root user
+clear			--. Clears the screen		(cls --> Similar to cls in windows cmd prompt)
+cat				--> Read info from a file
+
+uptime			--> Shows system uptime info
+uptime -p		--> 
+man <command>	--> Open manual page about the listed command
+
+mkdir			--> make directory (create a folder)
+
+
+
+root user will have full access / unrestricted access on this OS
+
+folder = directory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
