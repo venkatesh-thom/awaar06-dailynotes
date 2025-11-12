@@ -49,10 +49,79 @@ man <command>	--> Open manual page about the listed command
 mkdir			--> make directory (create a folder)
 
 
-
 root user will have full access / unrestricted access on this OS
 
 folder = directory
+
+----
+
+touch 			--> create a zero bytes/empty file
+
+touch song1.txt
+touch song2.txt
+touch song3.txt
+
+touch video{1..3}.txt	--> Creates 3 files with name video1 video2 and video3
+
+rm				--> Remove the individual files
+rmdir			--> Remove the empty directory
+rm -r <DIR>		--> Recursively delete the files and then folder
+rm -rf <Dir>	--> Recurseively and forcefully deletes the directory (use with caution)
+rm -rf *		--> Deletes all files and dir from current location
+
+cp <file> <target>						--> Copy a file to target directory
+cp <file1> <file2> <file3> <target> 	--> Copy multiple files to target directory
+cp -R <dir> <target/dir>				--> Copy a directory to target location
+
+mv <file> <target>						--> Moves the to target location
+mv <dir> <target>						--> Moves the directory to target location
+
+sudo dnf install tree -y				--> Installs tree package to view the file hierarchy
+
+"mv" also used to rename a file or directory..
+
+mv <wrong-name> <valid-name>			--> Rename a file
+mv <wrong-dir-name> <valid-dir-name>	--> Rename a directory
+
+---
+
+cat test.txt					--> Displays the entire content of the given file
+more test.txt					--> Displays the content page by page
+
+when using "more" command. Use "enter" to go to next line.. use "space" to scroll to next page
+
+cp /etc/passwd .				--> Copies the passwd file to current locaiton
+
+head passwd						--> Displas the top 10 lines of the doc
+tail passwd						--> Displas the bottom/last 10 lines of the doc
+
+head -n 2 passwd				--> Displas the top 2 lines of the doc
+tail -n 2 passwd				--> Displas the last/bottom 2 lines of the doc
+
+sort passwd						--> Displays the conent of a file in alphabetic order
+sort -r passwd					--> Displays the conent of a file in reverse alphabetic order
+
+pr passwd						--> Formats a file for printing
+
+---
+
+grep : Global regular expression print : Its a CLI tool to search text with in a file.
+
+grep <search-word> <file-name>
+grep "root" passwd				--> Search for "root" inside the "passwd" file
+
+grep -i "Root" passwd			--> Case Insensitive search		
+grep -i "root" passwd test.txt	--> Search for root word in multiple file
+
+grep -r "root" /home/ec2-user	--> Search for root word in a directory
+
+ps aux | grep sshd				--> Takes the output of "ps aux" command and grep search for "sshd" and displays the lines matching with sshd
+
+---
+
+
+
+
 
 
 
