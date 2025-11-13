@@ -119,14 +119,65 @@ ps aux | grep sshd				--> Takes the output of "ps aux" command and grep search f
 
 ---
 
+VIM Editor:  (Vi IMproved) : Text editor in Linux OS.. 
+
+Any fine with vim opens in "command mode".. to enter the text we need to switch to "insert mode"..
+
+press "i" to go to insert mode
+press "esc" to come back to "command mode" to save the file / exit from editor..
+
+:wq			--> Write and Quit from editor
+:q!			--> Quit without saving changes and exit
+
+u			--> undo
+
+o 		--> Opens a new line below the current cursor location, works only in command mode
+k		--> Move cursor one line up
+j		--> move cursor one line down
+x		--> Delete the character/letter before the cursor
+
+delete:
+
+dd		--> Delete the entire line
+10dd	--> Delete the next 10 lines from cursor
+db		--> delete the word before the cursor
+dw		--> Delete the word after/from the cursor
 
 
+:set number		--> displays the line number
+:set nonumber	--> Remove the line number
+
+:<line-num>		--> takes our cursor to specific line number
+:15				--> jump cursor to line 15
+
+/<search-word>	
+
+====
+
+zip myfiles.zip file1.txt file2.txt			--> Zip individual/selected file
+zip allfiles.zip *							--> Zip everything from current location
+zip -r folder.zip folder-name				--> zip everything from the folder
+
+unzip myfiles.zip							--> unzip all the files
+unzip -l myfiles.zip						--> list the files from zipped file (wont extract)
+
+---
+
+.tar.gz
+
+zip files into tar format
+tar -czvf myfiles.tar.gz file1.txt file2.txt	
+
+unzip files from tar format
+tar -xzvf myfiles.tar.gz
+
+====
 
 
+echo 
 
-
-
-
+> 		--> Redirect the output to the given file, It will overwrite the existing information
+>> 		--> Appends the output to the given file, It will add new info to the existing information
 
 
 
