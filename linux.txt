@@ -264,6 +264,107 @@ free -h				--> Shows memory usage
 free -s 2
 
 =====
+/etc/passwd			--> Contains users information
+$ --> You are a normal user in linux
+# --> You are the root (superuser) in linux
+
+
+always, root user id is "0"
+
+id <username>		--> To identify the user info i.e; uid, groups he is part of
+useradd				--> Create a new user
+passwd <username>	--> Command to set a password for a user
+groups <username>	--> List all the groups he is member of
+
+usermod -aG wheel <username>	--> add user to wheel group
+
+groupadd <group-name>					--> create a new group
+groupmod -g <grp-name> <username>		--> Add a user to a group as primary
+groupmod -aG <grp-name> <username>		--> Add a user to a group as secondary
+gpasswd -a <user-name> <group-name>		--> Will add user from a group
+gpasswd -d <user-name> <group-name>		--> Will delete user from a group
+deluser <username>
+
+/etc/ssh/sshd_config
+
+(line 65) Edit "passwrod authentication to yes"
+
+systemctl restart sshd
+
+sudo passwd ec2-user
+Set a password for ec2-user
+
+--> Tty to login as ec2-user using password
+
+
+---
+
+--> ec2-user/root
+
+sudo useradd rohit	--> user created
+sudo passwd rohit	--> setup password
+sudo usermod -aG wheel rohit		--> Added rohit user to wheel group
+sudo vim /etc/ssh/sshd_config	--> Edit the sshd config and set "passwrodauthentication yes"
+sudo systemctl restart sshd
+
+---
+
+Numeric / Octal: 
+
+r --> read --> 4
+w --> write --> 2
+x --> execute --> 1
+
+user (owner)
+group
+others
+
+rwx --> 4+2+1 --> 7
+rw- --> 4+2+0 --> 6
+r-x --> 4+0+1 --> 5
+r-- --> 4+0+0 --> 4
+-wx --> 0+2+1 --> 3
+-w- --> 0+2+0 --> 2
+--x --> 0+0+1 --> 1
+--- --> 0+0+0 --> 0
+
+- rw- r-- r--
+
+- type
+rwx --> user
+rwx --> group
+rwx --> others
+
+chmod 600 filename.txt			--> Owner: read and write.. No access to others
+chmod 777 filename.txt			--> Everyone has all the permissions
+
+Sticky bit permisisons : 
+
+chmod 1777 folder	--> avinash --> a.txt b.txt ... anudeep: c.txt
+Avinash can delete only a.txt b.txt.. he cannot delete files created by other users..
+
+ls -l				--> View permisisons
+stat <f-name>		--> Detailed file info
+getfacl <f-name>	--> View Access control list in detail
+
+getfacl a.txt 
+# file: a.txt
+# owner: ec2-user
+# group: ec2-user
+user::rw-
+group::r--
+other::r--
+
+
+
+
+
+
+
+
+
+
+
 
 
 
