@@ -355,17 +355,103 @@ user::rw-
 group::r--
 other::r--
 
+----
+adduser avinash
+    2  adduser anudeep
+    3  adduser aravind
+    4  groupadd devteam
+    5  groupadd managers
+
+usermod -aG devteam avinash 
+usermod -aG devteam anudeep 
+usermod -aG managers aravind 
+
+sudo -u anudeep mkdir /home/anudeep/private
+
+now try to access/list anything from anudeep's private directory as any other user.. It should not work
+
+====
+
+cd /opt
+mkdir devprojects
+chgrp devteam /opt/devprojects
+chmod 775 /opt/devprojects
+
+--> We tried to create files as devteam members (avinash and anudeep), worked
+--> We tried to create files as managers team members (aravind), not worked
+
+===
+
+cd /tmp
+mkdir temp_team
+chmod 1777 /tmp/temp_team			--> This enables the sticky bit
+
+now, switch to avinash user and create file "touch avinash.txt" and write some info
+change file permisisons to everyone "chmod 777 avinash.txt"
+
+Then, switch to anudeep user and try to access the file and try to add info using "echo", should work.. delete should not work
+
+===
+
+find / -name avinash.txt			--> Search for avinash.txt file in entire linux
+find /home -name avinash.txt		--> Search for avinash.txt file in /home dir
+find . -name avinash.txt			--> Search for avinash.txt file in current dir
+find / -iname Avinash.txt			--> Search for avinash.txt file in entire linux (Case Insensitive)
+
+find / -iname httpd.conf			
+find / -type f -name "*.conf"		--> it looks for all the "file" with format ending with "conf"
+find / -type d -name logs			--> Lists the directory named "logs" in entire linux
+
+dnf install mlocate -y			--> Installs the locate package
+updatedb						--> locate updates its db
+locate <filename>
+locate <dir-name>
+
+===
+
+tee (T junction pipe) --> takes the output of a command and writes it to two places (in console and file)
+tee command works better with sudo
+
+ls -l | tee output.txt				--> Output displays in terminal and stores the info in output.txt
+echo "test data" | sudo tee /etc/test.conf
+ls | file1.txt file2.txt			--> end output to multiple files
+ping google.com | tee ping.log
+
+===
+
+HEREDOC/EOF is a command to create a file..
+
+cat <<EOF > aws1.txt
+iam
+s3
+ec2
+vpc
+rds
+cloudwatch
+cloudtrail
+EOF
+
+===
+sed --> Stream Editor : it edits text automatically without opening the file.
 
 
+echo "i like banana"									--> output: i like banana 
 
+echo "i like banana" | sed 's/banana/mango/'			--> output: i like mango
 
+sed 's/s3/cloudwatch' aws.txt			--> This displays the output with changes but dont edit the file
 
+sed -i 's/s3/cloudwatch' aws.txt		--> changes text inside the file also
 
+sed -i 's/s3/cloudwatch/g' aws.txt		--> add parameter to change all the occurances 
 
+sed '/cloudwatch/d' 					--> Deletes all lines matches with word
 
+sed -n '1,3p' aws.txt 					--> DSisplays from line 1 to 3
 
+sed -n '5p' aws.txt 					--> Displays only line 5
 
-
+sed '/iam/a new servcie adds here' aws.txt		--> adds a new line after iam line
 
 
 
