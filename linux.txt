@@ -633,6 +633,22 @@ Then, reboot the instance
 ==
 
 
+DLM : We can automate the snapshot creation process (periodically).. 
+
+Choose Instance : All the volumes attached to that instance.. (Do you want to Exclude root volume)  
+Choose Volume : Individual volume only..
+
+Schedule : 6 hrs.. 
+
+Instance selection : Envrionemnt : Prod
+
+Do you want to copy this snapshot to other region.? or other account automatically.??
+
+====
+
+
+
+
 
 
 
