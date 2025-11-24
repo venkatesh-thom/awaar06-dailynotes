@@ -233,17 +233,163 @@ icacls "keypair" /grant:r "%USERNAME%:R"
 Unix --> 1970 (OS) --> bell labs --> closed source
 Unix style OS --> Linux --> open source
 
+===========
+
+EBS : 
+Snapshots : 
+GoldenAMI
+
+===
+
+Mandatory : you have to stop ec2 instance to upgrade to higher confi.. 
+Recommended : for best result, you can follow.. 
+
+===
+
+Stop the instance --> Choose "Instance settings" --> "Image and template" --> "create image"
+
+Launch couple of instance from GAMI and verify the output.
+
+==
+
+Requirement : Increase the instance configuration from "t3.micro" to "t3.small"
+
+you have to stop ec2 instance to upgrade to higher confi.. We cannot perform this while instance is in running state.. 
+
+
+--> Public IP will change when we perform Stop and start.. (*Reboot --> Public IP wont chnage)
+
+http://13.127.254.77/
+
+13.201.87.212
+
+Elastic IP / EIP : We can generate an EIP and associate with an ec2 insatnce.. We will have fixed IP.. *EIP cost additinally
+
+13.203.253.110
+
+
+====
+
+Create a CRQ Change request : t3.micro --> t3.small
+
+CAB / Change Advisory Board : We have to present our change : 
+--> When it is planned.?							: Weekend (Saturday Morning - 04:00 AM)
+--> Is it client facing.? 							: No
+--> Any clinet approvals required.?					: No
+--> Does it involve with budgeting approvals.?		: yes, But minimul
+--> Does it required any downtime.?					: yes, approx 1 hr
+--> What is the rollback plan.?						: yes, change config to t3.micro
+--> What are the teams involved in this CRQ.? 		: production support, db, app.. 
+--> Have you created task for all the involved teams.? : yes
+--> Are you performing any Pre-CRQ steps 			: backup/snapshot
+--> Who do the validation post change.? 			: production support, application, aws
+
+==> Every org/project will have a monthly maintenance window / Green Zone window :  
+
+
+======
+
+dnf install httpd -y
+
+httpd -v					--> list the httpd version
+
+systemctl status httpd
+systemctl start httpd
+systemctl enable httpd
+systemctl restart httpd
+
+systemctl enable httpd --now
+
+/var/www/html/ 				--> Defualt DocumentRoot
+
+Apache configuration path : /etc/httpd/conf/httpd.conf
+
+<public-ip>					--> Defaultly picks port 80
+<public-ip>:8080			--> try to access webpages on port 8080
+
+
+Open configuration file : /etc/httpd/conf/httpd.conf
+
+Change Document root path to : /data/website
+
+then adjust the access to content
+
+<Directory "/data/website">
+    AllowOverride None
+    # Allow open access:
+    Require all granted
+</Directory>
+
+
+--> restart httpd
+
+Make sure Apache user has valid access on the configured path...
+
+chown -R apache:apache /data/website
+chmod -R 755 /data/website
+
+----
+
+Where i can find all the logs related to httpd. 
+/var/log/httpd
+
+access_logs
+error_logs
+
+---
+
+PortNumbers
+
+http : 80
+https: 443
+ssh : 22
+rdp : 3389
+mysql : 1433
+mssql : 3306
+nfs : 2049
+---
+
+
+EFS : Elastic File system : 
+
+--> No Pre-Provisioning required
+--> unlimited storage available, we get charged based on our usage.
+--> EFS works with NFS v4.2 protocol (Network file system)
+--> We can use this EFS with only Linux OS. 
+--> For windows, We have SMB protocol, We can use FSx for windows.. 
+
+--> Create a SG for EFS, Open port 2049.. 
+
+To where we need to open NFS port on EFS SG..
+1. Open to ec2 instance private IP addresses
+2. Open to VPC IP addresss
+3. Open to ec2 instances Security Group ** (Highly recommended)
+4. Open to everyone (Not recommended)
+
+
+EFS Sg --> 2049 --> Anywhere/MyIP/custom --> choose "custom" and enter "ec2 instances SG"
+
+1. Am using same security group for multiple ec2 instances.. SG Name: web-sg
+2. EFS Sg --> 2049 --> Anywhere/MyIP/custom --> choose "custom" and enter "ec2 instances SG"
 
 
 
 
+dnf install httpd -y
+systemctl enable httpd --now
 
 
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0084e55f0f5bb548d.efs.ap-south-1.amazonaws.com:/ /var/www/html/
+
+verify the mount using "df -Th" command
+
+Get entry from /etc/mtab and add it to /etc/fstab for perm mount.
 
 
+mount | grep nfs			--> Run this comamnd to know, on what all the path NFS is mounted on.. 
 
 
-
+----
 
 
 
