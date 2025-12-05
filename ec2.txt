@@ -710,8 +710,19 @@ security-groups
 services/
 
 
+---
+
+SLA : Service Level agreement : 
+
+99.99%
+99.999999999%
 
 
+RPO : Recovery Point Objective : How much data we can offered to lose... 
+RPO : 30 Minutes.. Create a snapshot for every 30 min.. 
+
+RTA : Recovery Time Actual : How long it will take to bring the server backup / can fix issue.. 
+RTA : System down at 08:30 AM and by 09:00 AM we fully brought the system online.. RTA: 30 Min..
 
 
 
