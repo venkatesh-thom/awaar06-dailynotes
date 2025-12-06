@@ -1,0 +1,47 @@
+
+
+
+
+
+Pre-Requisites:
+Create A record for your domain with Instance IP Address.. 
+
+avinash.learnaws.today.com
+www.avinash.learnaws.today.com
+
+Verify output with nslookup.. It should resolve to ec2 instance IP Address..
+
+
+sudo dnf install -y certbot mod_ssl python3-certbot-apache
+
+Create a configuration file first..
+
+vim /etc/httpd/conf.d/learnawstoday.conf
+
+
+---
+
+<VirtualHost *:80>
+    ServerName avinash.learnaws.today
+    ServerAlias www.avinash.learnaws.today
+    DocumentRoot /var/www/html
+    
+    <Directory /var/www/html>
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/httpd/learnaws-error.log
+    CustomLog /var/log/httpd/learnaws-access.log combined
+</VirtualHost>
+
+-----
+
+sudo systemctl restart httpd
+
+sudo apachectl configtest
+
+sudo certbot --apache -d avinash.learnaws.today -d www.avinash.learnaws.today
+
+
+
