@@ -1,0 +1,183 @@
+
+IPv4 : 32 bit : 4.3 billion unique IP Address (2^32)
+IPv6 : 128 bit Address Space : 340 unidecilion unique IPs.. (2^128)
+
+---
+
+Public IP : Its works over the interent.. Its unique globally.. ISP (Internet Servcie Provider) : 
+Private IP : Its used within internal network, Its unique but within the network.. 
+
+
+Public: https://whatismyipaddress.com/
+iplocation.io
+
+Private IP : 
+windows: open command prompt.. ipconfig  .. ipconfig /all
+Linux: ifconfig / ip addr / ip
+
+IPv5 has 5 classes...
+
+Class A : 0 - 126 : 0.0.0.0 - 126.255.255.255
+CLass B : 128 - 191 : 128.0.0.0 - 191.255.255.255
+Class C : 192 - 223 : 192.0.0.0 - 223.255.255.255
+
+Class D : 224 - 239 : 224.0.0.0 - 239.255.255.255 (Multicasting Purposes)
+Class E : 240 - 255 : 240.0.0.0 - 255.255.255.255 (Reserved for R&D)
+
+127.0.0.0 --> Reserved for loopback tstings..
+
+IPv4 is 32 bit.. 8bit . 8bit . 8bit . 8bit
+
+---
+
+Every class (A-C) has a private IP address range to use for internal communications.. 
+
+Class A : 10.0.0.0 - 10.255.255.255
+Class B : 172.16.0.0 - 172.31.255.255
+Class C : 192.168.0.0 - 192.168.255.255
+
+=====
+
+D: 09/12/2025
+
+Network : Group of interconnected devices (i.e; Your home wifi network) : VPC
+
+Host : A device inside a network (Printer, TV, alexa, Phone) : ec2, rds
+
+Class A : N.H.H.H
+Class B : N.N.H.H
+Class C : N.N.N.H
+
+---
+
+Class A : 0 - 126
+127 Networks
+16 million hosts per network
+
+
+1.0.0.0
+1.0.0.1
+1.0.0.2
+1.0.0.3
+1.0.0.255
+1.0.1.0
+1.0.1.1
+1.0.1.255
+1.0.2.0
+1.(0-255).(0-255).(0-255)
+1.255.255.255
+
+---
+
+Class B : N.N.H.H : 128.0.0.0 - 191.255.255.255
+16,000 Networks
+65,000 Hosts per Network
+
+128.0
+128.1
+128.255
+129.0
+129.255
+...
+191.0
+191.1
+191.255
+
+172.16.0.0
+172.16.0.1
+172.16.0.2
+172.16.0.3
+172.16.0.255
+172.16.1.0
+172.16.1.1
+172.16.1.255
+..
+172.16.255.255
+
+----
+
+Class C : N.N.N.H : 192.0.0.0 - 223.255.255.255
+2 Million Networks
+256 Hosts per Network
+
+192.0.0.0
+192.0.1
+192.0.2
+192.255.255
+193.0.1
+193.0.2
+193.255.255
+..
+223.0.0
+223.255.255
+
+192.0.1.0
+192.0.1.1
+192.0.1.2
+192.0.1.255
+
+==============
+
+DHCP : Dynamic host COnfiguration protocol : It allocates IP address to the devices automatically that joins to the network ..
+
+===
+
+IPv4 : 32 blocks
+
+/32 --> 32 - 32 = 0 = 2^0 = 1
+/31 --> 32 - 31 = 1 = 2^1 = 2
+/30 --> 32 - 30 = 2 = 2^2 = 4
+/29 --> 32 - 29 = 3 = 2^3 = 8
+/28 --> 32 - 28 = 4 = 2^4 = 16			--> Min VPC Supported Size
+/24 --> 32 - 24 = 8 = 2^8 = 256
+/16 --> 32 - 16 = 16 = 2^16 = 65536		--> Max VPC Supported Size
+
+We cannot use all the IPs for our VPC.. 
+
+In any network we cannot use the First IP (network ID) and Last IP Address (Broadcast IP)
+--> Network ID
+--> Broadcast ID
+Along with Existing 2 Reserved IPs, AWS reserves 3 more IPs..
+--> VPC Router
+--> AWS DNS
+--> Future Use
+
+---
+
+/28 --> 32 - 28 = 4 = 2^4 = 16 - 5 = 11 Usable IPs				--> Min VPC Supported Size
+/24 --> 32 - 24 = 8 = 2^8 = 256 - 5 = 251 Usable IPs
+/16 --> 32 - 16 = 16 = 2^16 = 65536	- 5 = 65531 Usable IPs		--> Max VPC Supported Size
+
+/21 --> 2048
+/20 --> 32 - 20 = 12 = 2^12 = 4096
+
+---
+
+VPC --> Region Specific Servcie.. 
+
+In DefaultVPC all subnets are Public.. Internet facing subnets.. gets internet using "Internet gateway"..
+
+To Secure the sensitive data/workload, we always create customVPC and run our workload.. 
+
+
+Pre-Check for Design considerations:
+
+1. How big VPC we need.? Ans: 2000 --> 192.168.0.0/20 --> 4096 IPs
+2. How many subnets we need to create.?
+	2.1 Public Subnet
+		2.1 Web 		--> (192.168.0.0/26 & 192.168.0.64/26) 
+	2.2 Private Subnet
+		2.2.1 App		--> (192.168.1.0/24 & 192.168.2.0/24)
+		2.2.1 DB		--> (192.168.3.0/24	& 192.168.4.0/24)
+		2.2.2 lambda	--> (192.168.5.0/24	& 192.168.6.0/24)
+3. Any plans for future explansions.?
+	Reserve an IP range for future use. (192.168.8.0/22	& 192.168.12.0/22 & 192.168.7.0/24)
+		
+
+
+
+
+
+
+
+
