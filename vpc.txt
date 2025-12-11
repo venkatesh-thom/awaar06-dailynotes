@@ -174,7 +174,7 @@ Pre-Check for Design considerations:
 	Reserve an IP range for future use. (192.168.8.0/22	& 192.168.12.0/22 & 192.168.7.0/24)
 		
 		
-		
+	
 		
 D: 10/Dec/2025		
 
@@ -212,6 +212,58 @@ NAT Gateway : provides internet to private subnet resources without compromisinf
 --> need to update the route table with NAT, so that private subnet resources can access internet..
 
 ---
+
+
+D: 11/12/2025
+
+Network ACL / NACL : 
+--> Allow and Deny
+--> NACLs are stateless (We need to open inbound and outbound traffic along with epehemral ports)
+--> Lowest rule number will have highest priority..
+--> When conflict occurs, Lowest rule number will take affect.
+
+--> SG are stateful (Response flow automatically allowed, so we have not worried about outbound rules)
+
+Subnet : individual Streets in a community..
+NACL : Act as a Security guard for your street.. It verified based on the rules.. 
+
+
+Inbound : Traffic coming into the subnet from outise.
+
+*Traffic coming from the internet to connect to server/ access webpage..
+*Traffic from another subnet, entering into your subnet..
+*Traffic from On-Premise environment entering into subnet..
+
+Outbound: Traffic leaving your Subnet..
+
+*Webserver running in our subnet is responding back to the client.
+*Ec2 instance, inside our subet is accessing internet (google / FTP)..
+*Traffic going out to outer world / other subnet.
+
+
+Ephemeral ports: When we are responding back to a request, it wont use same port number.. 
+Ex: if a request comes to your webserver on port 80, it DOES NOT send the reply back from port 80. It picks a temporary port.. 
+Range : 1024 - 65535
+
+
+CLient sending via port 80 --> Server 
+Server replies back on port 56789 (random and temp)
+
+
+Every VPC comes with a Default NACL, it wont filter any traffic, allows everything
+
+New NACL, wont allow any traffic.. 
+
+---
+
+Create VPC flowlogs for Auditing purposes.. 
+--> We cna enabvle logs at "VPC" level / subnet / instance ENi level also..
+Store logs into "cloudwatch logs group" and use taril option to search recent events..
+
+---
+
+
+
 
 
 
