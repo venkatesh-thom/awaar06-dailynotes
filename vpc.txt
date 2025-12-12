@@ -262,6 +262,42 @@ Store logs into "cloudwatch logs group" and use taril option to search recent ev
 
 ---
 
+D: 12/12/25
+
+VPC Peering : helps to enable communication between VPCs.. 
+
+--> Peering has a limitation, Requester VPC CCIDR and Accepter VPC CIDR should not be same.
+--> VPC peering is non-transitive peering
+
+
+---
+
+TGW / Transite Gateway : helps to enable communication across multiple VPCs, from a central hub/Central networking account..
+
+Step 1 : Create a transit gateway in Central networking account.
+
+Step 2 : Share it with Multiple AWS accounts (member accounts) using RAM (Resource Access manager) service.. and member account has to accept the share.,.
+
+Step 3 : In CentralNW account (TGW created acc).. Create a TGW attachment and choose the local VPC.
+
+Step 4 : In member account (aviz8), Create a TGW attachment with local VPCs subnets..
+
+Step 5 : Switch to CentramNW account, Choose the shared attachment and accept it..
+
+Step 6 : Edit Memberaccount VPC route table with "CentralNW" account CIDR range.
+
+Step 7 : Edit CentralNW VPC route table with "Member Account" CIDR range.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
