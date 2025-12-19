@@ -1,0 +1,33 @@
+
+S3 : Object based storage
+EBS : block based storage
+EFS : Storage over network
+
+S3 = AWS version Google Drive/OneDrive/Dropbox/icloud
+
+bucket = folder
+S3 bucket name should be unique.
+Min : 3 char, max: 63 char..
+Should contain only lowercase amnd 0-9 and . and -
+Should not start with .
+should not end with .
+
+S3 has unlimited storage..
+Min object 0 bytes
+Max object Size : 50 TB
+
+
+https://aviz-bucket-awar06a.s3.ap-south-1.amazonaws.com/aviz-logo.png
+
+https://bucketname.s3.region.amazonaws.com/object-name
+
+https://s3.region.amazonaws.com/bucketname/object-name
+
+
+Storage classes
+Versioning
+Life Cycle RUle
+Replication
+Encryption
+Events
+Bucket Policy

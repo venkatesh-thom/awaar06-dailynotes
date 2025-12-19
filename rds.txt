@@ -64,6 +64,48 @@ OLAP : Online Analytical Process : Redshift
 Amazon Redshift : Datawarehousing.. 
 Centralised system to store, integrate and analyse large set of historical data from lot of sources (application, database, logs, CRM, ERP...)
 
+---
+
+Dynamodb: Its NoSQL service.. Data stores in JSON format.. Single digit millisecond latency at any scale of data..
+
+{
+"Sno" : 1,
+"Full name" : "avinash",
+"contact" : "123"
+}
+
+---
+
+{
+  "studentid": {
+    "S": "100"
+  },
+  "fullname": {
+    "S": "avinash"
+  },
+  "address": {
+    "S": "hyd"
+  },
+  "contact": {
+    "N": "123123"
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
