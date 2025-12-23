@@ -30,10 +30,7 @@ Versioning
 Life Cycle RUle
 
 Replication
-Events
-Bucket Policy
 
-Encryption
 
 ------------------
 
@@ -93,18 +90,45 @@ permanently delete : gone forever
 ---
 
 Life Cycle management Rule : 
+--> helps to trasit data from storage class to storage class automatically.
+--> helps to delete the objects automatically (based on expire / perm delete)
+
+---
+
+S3 Replicaton : 
+
+SRR : Same Region Replication : 
+CRR : Cross Region Replication : 
 
 
+---
+
+Events : 
 
 
+Bucket Policy
 
 
+Effect : Allow / Deny 
+Principal (IAM/group/role) :  
+Actions : GetObject
+Resource ARN (Amazon Resource Name) : 
+
+ARN : Bucket level operation : Bucket ARN
+ARN : Object level operation : Bucket ARN/*
+
+*if you are not sure about bucket/object level operation, add both..
 
 
+---
+
+aviz-bucket-awar06a : Everyone should have read access, but one particular-user/anyuser should not able to upload anything into this bucket.
 
 
-
-
+Effect : Deny 
+Principal (IAM/group/role) :  arn:aws:iam::982424467695:user/s3-task
+Actions : PutObject, DeleteObject
+Resource ARN (Amazon Resource Name) : arn:aws:s3:::aviz-bucket-awar06a,arn:aws:s3:::aviz-bucket-awar06a/*
 
 
 
