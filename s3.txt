@@ -130,6 +130,67 @@ Principal (IAM/group/role) :  arn:aws:iam::982424467695:user/s3-task
 Actions : PutObject, DeleteObject
 Resource ARN (Amazon Resource Name) : arn:aws:s3:::aviz-bucket-awar06a,arn:aws:s3:::aviz-bucket-awar06a/*
 
+-------
+
+Encryption : 
+
+In Transit Encryption : Data encrypted when it is in travelling state : If you put a lock on your letter, only your friend can open it. using https:// website will encrypt your data.. 
+
+At-Rest Encryption / SSE Server Side Encryption : Data encrypted when it is reached the server : Once you received the letter, you read it, then you dont leave on your table.. you put it into a bag/locker to secure it.
+
+Client Side Encryption : We can encrypt the data in our local environment, that encr data, we can send to aws.. 
+
+
+---
+
+
+SSE - S3 (Server Side Encryption - S3) : Encryption key material generated and managed by S3 service.. Whoever has access to S3 platform, they can decrypt the data.. No addl permisisons required on encryption key.. 
+
+SSE - KMS with DMK (Default Master Key) : Encryption key material generated and managed by KMS service.. Whoever has access to S3 platform, they can decrypt the data.. No addl permisisons required on encryption key.. 
+
+SSE - KMS CMK (Customer Managed/Master key) : Encryption key material generated and managed by KMS service.. Along with the platform access, User should have "Key Usage" Permissons to decrypt the data.. Only platform access is not sufficient.. 
+
+Step 1 : Choose the logic (symmetric)
+Step 2 : Provide alias name and descryption
+Step 3 : Choose "Key Administrators"
+Step 4 : Choose "key users"
+
+
+Symmetric Encryption key : One key used for encry and decryption.. 
+Asymmetric Encryption key : We will have two keys.. Public key (you give to everyone) and private (you keep it secret)
+
+
+SSE - KMS C (Customer Provided key) : Encryption key material generated and managed by Customer.. Along with the platform access, User should have "Key Usage" Permissons to decrypt the data.. Only platform access is not sufficient.. 
+
+https://www.youtube.com/watch?v=r17Z75TqjU0
+
+				Who owns key		Control			Audit
+SSE-S3 : 		AWS					no				No
+KMS-DMK			AWS					Limited			Yes
+KMS CMK			AWS					Full			Yes
+SSE-C			You/We				Full			Limited 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
