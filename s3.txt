@@ -36,9 +36,9 @@ Replication
 
 
 Pricing : 
-Size of the data
-For API calls to access data
-Data Retrival
+Size of the data : 
+For API calls to access data : 
+Data Retrival : 
 
 
 Storage Classes : 
@@ -245,6 +245,11 @@ Cloudfront ; CDN - Content Delivery Network..
 ---
 
 WAF : Web Application firewall : 
+
+
+---
+
+https://youtu.be/YrfDLrSVxQ8?si=hN_w27Eu8aSvRLik
 
 
 
