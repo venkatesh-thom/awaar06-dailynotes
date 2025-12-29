@@ -252,7 +252,15 @@ WAF : Web Application firewall :
 https://youtu.be/YrfDLrSVxQ8?si=hN_w27Eu8aSvRLik
 
 
+---
 
+Cloudtrail:
+
+
+Management events : Capture management operations performed on your AWS resources.
+Data events : Log the resource operations performed on or within a resource.
+Insights events : Identify unusual activity, errors, or user behavior in your account.
+Network activity events : Network activity events provide information about resource operations performed on a resource within a virtual private cloud endpoint.
 
 
 
