@@ -1,0 +1,29 @@
+Parameters:
+    Instancetype:
+      Type: String
+      Default: t3.micro
+      Description: Choose the instance type based on your workload
+      AllowedValues: 
+        - t3.micro
+        - t3.small
+    AvailabilityZone:
+      Type: String
+      Default: ap-south-1a
+      Description: Choose the AZ
+      AllowedValues: 
+        - ap-south-1a
+        - ap-south-1b
+
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref Instancetype
+      ImageId: ami-00ca570c1b6d79f36
+      AvailabilityZone: !Ref AvailabilityZone
+      KeyName: awar06-lnx
+
+Outputs:
+  EC2Instanceid:
+    Description: launched ec2 instance id
+    Value: !Ref MyEC2Instance
