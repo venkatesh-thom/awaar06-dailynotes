@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create S3 first -> Wait 60s -> Create EC2.
+
+Resources:
+  # ---------------------------------------------------------
+  # 1. THE S3 BUCKET (Starts First)
+  # ---------------------------------------------------------
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+
+  # ---------------------------------------------------------
+  # 2. THE TIMER (Lambda Function)
+  # This defines a function that simply sleeps for 60s
+  # ---------------------------------------------------------
+  DelayFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  DelayFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Role: !GetAtt DelayFunctionRole.Arn
+      Runtime: python3.9
+      Timeout: 120  # <--- CRITICAL: Must be longer than the sleep time!
+      Code:
+        ZipFile: |
+          import cfnresponse
+          import time
+          def handler(event, context):
+            try:
+              if event['RequestType'] == 'Create':
+                print("Sleeping for 60 seconds...")
+                time.sleep(60)
+              # Always return success so the stack proceeds
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+            except Exception as e:
+              print(e)
+              cfnresponse.send(event, context, cfnresponse.FAILED, {})
+
+  # ---------------------------------------------------------
+  # 3. THE TRIGGER
+  # This runs the Lambda and enforces the order
+  # ---------------------------------------------------------
+  MyDelayTrigger:
+    Type: Custom::Delay
+    DependsOn: MyS3Bucket      # <--- Wait for S3 to finish before starting timer
+    Properties:
+      ServiceToken: !GetAtt DelayFunction.Arn
+
+  # ---------------------------------------------------------
+  # 4. THE EC2 INSTANCE (Starts Last)
+  # ---------------------------------------------------------
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    DependsOn: MyDelayTrigger  # <--- Wait for the 60s timer to finish
+    Properties:
+      ImageId: ami-00ca570c1b6d79f36
+      InstanceType: t3.micro

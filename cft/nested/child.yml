@@ -1,0 +1,11 @@
+Resources:
+    Bucket1:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: !Sub 'nested-child-bucket998908-${AWS::AccountId}-${AWS::Region}'
+    
+    Bucket2:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: !Sub 'nested-child-bucket343432-${AWS::AccountId}-${AWS::Region}'
+        

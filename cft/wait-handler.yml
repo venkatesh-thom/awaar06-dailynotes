@@ -1,0 +1,30 @@
+Resources:
+  MyWaitHandle:
+    Type: AWS::CloudFormation::WaitConditionHandle
+  
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.micro
+      ImageId: ami-00ca570c1b6d79f36
+      AvailabilityZone: ap-south-1a
+      KeyName: awar06-lnx
+      UserData: 
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sleep 60
+          /opt/aws/bin/cfn-signal -e 0 -r "Done" "${MyWaitHandle}"
+  
+  MyWaitCondition:
+    Type: AWS::CloudFormation::WaitCondition
+    DependsOn: MyEC2Instance
+    Properties:
+        Handle: !Ref MyWaitHandle
+        Timeout: '120'
+        Count: 1
+  
+  MyS3bucket:
+    Type: AWS::S3::Bucket
+    DependsOn: MyWaitCondition
+    Properties:
+      BucketName: 'avinash31122025-waittest'
