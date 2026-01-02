@@ -1,0 +1,19 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyEC2RunInstancesWithoutEnvironmentTag",
+      "Effect": "Deny",
+      "Action": "ec2:RunInstances",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "ec2:CreateAction": "RunInstances"
+        },
+        "Null": {
+          "aws:RequestTag/Environment": "true"
+        }
+      }
+    }
+  ]
+}
