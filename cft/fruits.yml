@@ -1,0 +1,83 @@
+#Example: Simple mapping
+fruit: apple
+color: red
+origin: simla
+
+---
+
+#Example2: Sequence (list) - Basic List of fruits
+fruits:
+  - apple
+  - banana
+  - cherry
+  - mango
+
+---
+
+#Example3 : Flow-Style squence - inline list
+fruits: [apple, banana, cherry, mango]
+
+---
+
+#Example4 : Scalers and Data types 
+fruit: apple. #string
+price: 30     #number
+available: true #boolean
+
+---
+#Example5 - Collections - sequences and mappings and nested mappings
+fruits:
+  - apple
+  - banana
+  - mango
+apple:
+  color: red
+  price: 30
+  available: true
+banana:
+  color: yellow
+  price: 10
+  available: false
+
+---
+
+#Example 6: Shop inventory 
+
+shop-name: Fruit shop for AWS
+location: hyderabad
+fruits:
+  - name: apple
+    color: red
+    price: 30
+    available: true
+  - name: banana
+    color: yellow
+    price: 10
+    available: false
+  - name: mango
+    color: red
+    price: 50
+    available: true
+discount:
+  weekday: 20
+  weekend: 10
+
+---
+
+#Reference Example with fruits
+
+fruits:
+  bestfruit: apple
+  sweetfruit: mango
+  healthyfruit: orange
+
+AvinashFruitBasket:
+  firstchoice: !Ref healthyfruit
+  secondchoice: !Ref sweetfruit
+  thirdchoice: !Ref bestfruit
+
+AnudeepFruitBasket:
+  firstchoice: !Ref bestfruit
+  secondchoice: !Ref healthyfruit
+  thirdchoice: !Ref sweetfruit
+  fourthchoice: !

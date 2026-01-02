@@ -1,0 +1,15 @@
+Parameters:
+  BucketName:
+    Type: String
+    Description: Enter the name of bucket you want to create  
+
+Resources:
+  MyS3bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+
+Outputs:
+    S3bucketname:
+      Description: S3 bucket created by this template is
+      Value: !Ref MyS3bucket

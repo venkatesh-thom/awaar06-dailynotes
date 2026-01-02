@@ -1,0 +1,14 @@
+
+SDLC : Software development life cycle
+
+Training/Sandbox			--> POC
+Development / Dev			--> Dev
+Testing / QA / SQA			--> Testing
+UAT 						--> Prod-Similar
+Prod 						--> Prod
+Central Logging				--> AWS Org (Logs, Bill)
+Central Network Account		--> TGW
+
+---
+
+

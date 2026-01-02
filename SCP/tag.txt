@@ -1,0 +1,21 @@
+{
+  "tags": {
+    "Environment": {
+      "tag_key": {
+        "@@assign": "Environment"
+      },
+      "tag_value": {
+        "@@assign": [
+          "Dev",
+          "Uat",
+          "Prod"
+        ]
+      },
+      "enforced_for": {
+        "@@assign": [
+          "ec2:instance"
+        ]
+      }
+    }
+  }
+}

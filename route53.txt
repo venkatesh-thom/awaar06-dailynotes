@@ -1,0 +1,50 @@
+Route53 : AWS DNS Service
+
+A Record : Address Record : IP <--> Name for Ipv4
+AAAA Record : Address Record : IP <--> Name for IPv6
+
+CNAME : Cananical Name : Another Name : 
+TXT : Simple text record : 
+MX REcord : Mail Server Record.. 
+
+Alias : This option you see only in AWS, it helps us to map an existing resources to the domain / subdomain.
+
+---
+
+Simple Routing Policy 
+Weighted RP
+Geolocation RP
+latecy RP
+Failover RP
+
+---
+
+Mumbai Region:
+
+1. Launched an EC2 Instance --> Installed "httpd" packge and Copied simple webpage and verified the output.
+2. Created an Application Load Balancer and Added the ec2 instance to the Load Balancer and verified the output.
+
+--
+
+N.Virginia Region:
+
+1. Launched an EC2 Instance --> Installed "httpd" packge and Copied simple webpage and verified the output.
+2. Created an Application Load Balancer and Added the ec2 instance to the Load Balancer and verified the output.
+
+---
+
+
+Domain <--> EC2 Instance with SSL Cert
+Domain <--> ELB with SSL Cert 
+
+
+windows: ipconfig /flushdns
+
+
+
+
+
+
+
+
+

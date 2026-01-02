@@ -627,24 +627,102 @@ echo "<h1>This is my 8080 Server</h1>" >> /var/www/html/index.html
 echo "<h1>healthy</h1>" >> /var/www/html/status.html
 
 
+=============
+Dec 2nd 2025
+============
+
+Stickyness : Session sticks to one server/instance only for a configured period.
+
+ALB dont support fixed IPs.. We cannot associate EIP to ALB..
 
 
+Round robin - (default) : Round robin routes requests evenly across healthy targets, in a sequential order. This is commonly used when the received requests are similar in complexity and the targets are similar in processing capability.
+
+Least outstanding requests : Least outstanding requests routes requests to the target with the lowest number of in progress tasks. This is commonly used when the received requests vary in complexity or the targets vary in processing capability.
+
+Weighted random
+Weighted random routes requests evenly across healthy targets, in a random order. While Anomaly detection is applied by default, you must turn on Anomaly mitigation for Automatic Target Weights (ATW) to apply.
+
+=====
+
+Network LB / NLB : Supports TCP, UDP, TLS.. 
+
+--> We can associate a dedicated Public IP address for our NLB.
+
+ALB dont support fixed IPs.. We cannot associate EIP to ALB..
+
+NLB works with "Flow hash Algorithm"...
+
+====
+
+Dec 3rd
+
+=====
 
 
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0121a78f3438b333b.efs.ap-south-1.amazonaws.com:/ /var/www/html/
+
+fs-0121a78f3438b333b.efs.ap-south-1.amazonaws.com:/ /var/www/html nfs4 rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=172.31.1.246,local_lock=none,addr=172.31.6.213 0 0
 
 
+http status code:
+
+2XX --> OK/Success
+3XX --> Redirection
+4XX --> CLient Side errors
+5XX --> Server Side errors
+
+----
+Dec 4th
+----
+
+metadata : Data about the data.. 
+
+We can use a metadata url to query instance to get information about the instance..
+
+curl http://169.254.169.254/latest/meta-data/
+
+ami-id
+ami-launch-index
+ami-manifest-path
+block-device-mapping/
+events/
+hostname
+iam/
+identity-credentials/
+instance-action
+instance-id
+instance-life-cycle
+instance-type
+local-hostname
+local-ipv4
+mac
+managed-ssh-keys/
+metrics/
+network/
+placement/
+profile
+public-hostname
+public-ipv4
+public-keys/
+reservation-id
+security-groups
+services/
 
 
+---
+
+SLA : Service Level agreement : 
+
+99.99%
+99.999999999%
 
 
+RPO : Recovery Point Objective : How much data we can offered to lose... 
+RPO : 30 Minutes.. Create a snapshot for every 30 min.. 
 
-
-
-
-
-
-
-
+RTA : Recovery Time Actual : How long it will take to bring the server backup / can fix issue.. 
+RTA : System down at 08:30 AM and by 09:00 AM we fully brought the system online.. RTA: 30 Min..
 
 
 

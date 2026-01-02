@@ -1,0 +1,28 @@
+Parameters:
+    Environment:
+        Type: String
+        Description: Choose your AWS environment to deploy your instance
+        AllowedValues:
+            - dev
+            - uat
+            - prod
+
+Mappings:
+  EnvToInstancetype:
+    dev:
+      InstanceType: t3.small
+    uat:
+      InstanceType: t3.small
+    prod:
+      InstanceType: c7i-flex.large
+
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+        ImageId: ami-00ca570c1b6d79f36
+        InstanceType: !FindInMap [EnvToInstancetype, !Ref Environment, InstanceType]
+        KeyName: awar06-lnx
+        Tags:
+          - Key: Name
+            Value: !Sub "MyMappings-test-${Environment}"
