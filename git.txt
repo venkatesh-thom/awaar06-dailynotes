@@ -1,0 +1,58 @@
+
+VCS : Version Control System : 
+
+1970 - SCCM - 1 file
+rcm - revision control system -     x file, 1 directory
+cvs - concurrent version system - x files, x direc, 1 user
+
+2000 - SVN  - x files, x dir, x users
+2005 - GIT - Global Information Tracker
+
+
+Repository : Project Code storage location.. 
+Clone : Making another copy of the existing repo..
+
+Local Repository : 
+Central / Remote Repository : 
+
+Install and configure git..
+
+git config --global user.name "avinash"
+git config --global user.email "avinash@gmail.com"
+git config --list
+git config --global --edit
+git config --global core.editor "vim"
+
+git init						--> onetime.. 
+git add	.						--> Git will track the files and changes
+git commit -m "commit msg"		--> Code/files commits to local directory
+
+git status						--> To know/identify the current status
+
+git log							--> To get commit hostory with info
+git log --oneline				--> simoplified commit history
+git log --oneline --author="root"	--> To get specific user commits
+git show "commit-id"			--> displays the specif commit details
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
