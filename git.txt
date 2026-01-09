@@ -34,15 +34,29 @@ git log --oneline				--> simoplified commit history
 git log --oneline --author="root"	--> To get specific user commits
 git show "commit-id"			--> displays the specif commit details
 
-	
 
+===========
 
+Configure .gitignore
 
+==========
 
+ls -al ~/.ssh
 
+ssh-keygen -t ED25519 -C "avizway@gmail.com"
 
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
 
+cat ~/.ssh/id_ed25519.pub
 
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAgM+j2Pr2tQoCaz5QPjUkilWypWxqZHYvfscRgBdp/y avizway@gmail.com
+
+-- Grab the above public key info and add it to github account.. Settings "SSH and GPG keys" --> add new ssh key..
+
+Verify: ssh -T git@github.com
+
+---
 
 
 
