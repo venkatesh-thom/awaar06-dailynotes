@@ -59,6 +59,141 @@ Verify: ssh -T git@github.com
 ---
 
 
+Our local repo dont have remote repo information.. We have to add it.. 
+
+git branch -M main
+git remote add origin https://github.com/avizway1/awar06-git-code.git
+git push -u origin main
+
+------
+create a new repository on the command line
+------
+
+mkdir awar06-git-code
+echo "# awar06-git-code" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/avizway1/awar06-git-code.git
+git push -u origin main
+
+
+=======
+
+push an existing repository from the command line
+git remote add origin https://github.com/avizway1/awar06-git-code.git
+git branch -M main
+git push -u origin main
+
+---
+
+git remote -v				--> We can identify the remote origin configured in your local repo
+
+git remote show origin		--> Show detailed remote repo configuration info
+
+---
+
+git fetch					--> fetches the latest inforamtion/metadata to local repo
+
+git pull					--> updates your local repo with code changes
+
+---
+
+Branching : 
+
+git branch					--> Shows the git branches
+
+git branch feature-x		--> creates a branch with name feature-x
+
+git checkout feature-x		--> Switches to feature-x branch - traditional
+git switch feature-x		--> Switches to feature-x branch - modern
+
+git checkout -b feature-y	--> Creates a new branch and checout/switch to it
+
+main --> 2 files --> Switched to Feature-x created 3 files --> ls (main + f-x) = 5 files
+
+touch feature-x{1..3}.txt
+git add .
+git commit -m "added feature-x code"
+
+--> switch to main as we want to merge feature-x to the main repo
+
+git switch main
+
+git merge feature-x				--> now feature-x code added to main branch
+
+git push -u origin feature-x		--> To push a specific branch to remote repo
+
+===========
+
+step 1 : create a repo and add a file info.txt
+
+hello
+My Name is ABC
+Working as XYZ
+
+--
+
+Step 2 ; Clone the repo into ec2 instance
+
+git clone <repo-url>
+cd <repo-url>
+git checkout -b branch1
+
+vim info.txt
+
+hello
+My Name is Avinash
+Working as AWS Engineer
+
+git add info.txt
+git commit -m "added avinash info"
+
+** DO NOT PUSH or MERGE
+
+==========
+
+Step 3: Switch your laptop
+
+Git clone <repo-url>
+cd <repo>
+
+edit info.txt
+
+hello
+My Name is Anudeep
+Working as Digital marketing Executive
+
+git add info.txt
+git commit -m "added anudeep info"
+git push origin main
+
+============
+
+Step 4 : Switch back to ec2 instance
+
+git switch main
+git pull origin main
+
+--
+
+git merge branch1
+
+======
+
+edit the file and resolve the conflict then commit and push it to repo
+
+Hello
+<<<<<<< HEAD
+My Name is Anudeep
+AM working as Digital marketing Executive
+=======
+My Name is Avinash
+AM working as AWS Architect
+>>>>>>> branch1
+
+================================
 
 
 
