@@ -195,6 +195,75 @@ AM working as AWS Architect
 
 ================================
 
+Rebase : Pick my work and place on top of the latest work.. 
+
+Git Temp removes your commit
+Moves your branch to the latest main commit
+re-applies our commit on top it.
+
+--> Merge : Combines the paths with a merge commit
+--> Rebase : replays our work on top of existing latest work
+
+--------------
+
+
+HEAD --> Where am right now.. HEAD always points to the current commit you are working on. 
+
+--
+
+GIT Restore : undo the file changes, Not commits..
+
+Whatever the file edit you have without commits, it will undo
+
+---
+
+GIT Reset : move HEAD backward.. This erase commits and go back
+
+THis reqrites the history
+
+---
+
+Stash : Saves our unfinished work and clean my workspace for further work.. (Hides our changes temp)
+
+--> Working on a full feature, Your code is not ready commit, 
+but you need to switch to a brqnch and do some other work to fix an issue/bug.
+
+
+git stash			--> Save changes temporarily
+git stash list		--> Shows all stashed changes
+git stash apply []	--> Brings back the changes
+git stash pop []	--> apply the change and then removes 
+git stash drop		--> delete the stash
+git stash clear		--> delete all stashes
+
+----
+
+git cherry-pick : We cna use this to pick one particular commit..
+
+Git cherry pick helps us to selectively copy a single commit from one branch to another b ranch without merging everything.
+
+--
+
+diff :  With the help of diff, we can see what changed.
+
+--
+
+fork : From an existing repo, we can take a copy of it to our account and we can do our own changes based on our requirement.
+
+If you want to send these changes to the main/base repo, you can create a pull request, the main repo owner has to accept the changes.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
