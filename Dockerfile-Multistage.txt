@@ -1,0 +1,8 @@
+#Stage-1
+FROM alpine:latest AS builder
+WORKDIR /app
+COPY index.html .
+
+#Stage-2
+FROM nginx:alpine
+COPY --from=builder /app/index.html /usr/share/nginx/html/index.html
