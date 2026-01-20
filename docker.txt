@@ -1,0 +1,387 @@
+
+
+dnf install docker -y
+
+systemctl start docker
+systemctl enable docker
+
+docker --version
+
+docker info
+
+docker images --> List all the images we have in this machine.
+
+https://hub.docker.com/
+
+docker ps 		--> shows running containers
+docker ps -a 	--> shows running and stopped containers
+
+docker run nginx		--> Runs nginx image
+docker run -d nginx		--> Runs nginx image in detached mode
+
+
+docker run mysql		--> if mysql image is not availbale in local, it will pull it from docker hub, then it will run..
+
+
+images : Nothing but a pre-configured application.. Treat it as an "AMI of EC2 service".. 
+
+---
+
+docker rmi mysql
+
+docker rm 1c54b4ac99a7
+
+docker stop <container-id>		--> To stop the container
+docker start <container-id>		--> To start the container
+docker kill <container-id>		--> To kill the container
+
+docker run -d -p <host-port>:<container-port> nginx:latest
+
+docker run -d --name mydemo-nginx -p 80:80 nginx:latest
+
+---
+
+docker inspect <container-id>	--> Shows all info about the container
+
+docker exec -it be754c028168 /bin/bash		--> TO connect to the running container, we can use this "exec" option.
+
+docker logs <container-id>					--> To verify the logs of a container
+docker logs be754c028168
+
+docker top be754c028168						--> Shows running processes inside a container
+docker stats								--> Shows live CPU, Memory, i/o stats
+
+---
+
+docker run -d -p 80:80 --name myapp --memory=256m --cpus=1 nginx:latest
+
+docker inspect 3a363e2d7c66
+
+docker inspect --format='{{.HostConfig.Memory}}' myapp
+docker inspect --format='{{.HostConfig.NanoCpus}}' myapp
+
+---
+
+
+docker rename clever_beaver myapp-new
+
+docker cp 3a363e2d7c66:/container.txt ./		--> Copy file from container to local current path
+
+docker cp ./host.txt 3a363e2d7c66:/
+
+---
+
+Network Modes in Containers..
+
+Bridge : Default for containers. Internal network where containers can talk to each other..  
+
+Host : Container shares the host machine's network. 
+
+none : Container has no network at all.. 
+
+container : Shares network with another container.. 
+
+overlay : used in docker swarm to connect containers across multiple hosts..
+
+
+
+docker network ls		--> Shows the network modes we have in current setup
+
+docker network inspect d2fcd90c6672
+docker network inspect host
+docker network inspect bridge
+
+
+docker network create my_network
+
+docker run -dit --name c1 --network my_network alpine
+
+docker run -it --network host nginx
+
+Bridge is the common and default network mode we use most of the times.. In AWS, We do have option to run our workload inside a VPC and we always prefer this.. 
+
+---
+
+Dockerfile : To containerise and deliver our application, we have to first write our own Dockerfiles, then we need to build, need to push it to "Docker Hub" / "ECR (Elastic Container Registry)".. 
+We can pull it from anywhere and run it.. 
+
+
+FROM 	--> We have to specify the base image to use for building the Docker image. (Base OS)
+
+FROM ubuntu:20.02
+FROM alpine:latest 
+
+---
+
+RUN		--> Executes command in a new layer on top of the above mentioned base image. 
+
+RUN apt-get update && apt-get install nginx -y
+
+**We can combine multiple commands into single layer to reduce the image layers and size
+
+---
+
+WORKDIR	--> Sets the working directory for the base image.
+
+WORKDIR /app
+
+---
+
+COPY	--> Copies files/directories from the local/host to the image we are preapring. Unlike ADD, it doesnt unpack archieves.
+
+COPY /home/ec2-user/mydata/ /usr/share/nginx/html/
+COPY . .
+
+---
+
+ADD		--> Similar to COPY, but supports archieve extractions.. (.tzr.gz)
+
+ADD my_data.tar.gz /app/
+
+---
+
+**At organisation Level, we always follow one security standard/measure.. We never run images as root user.. 
+
+USER	--> Sets the user to use when we are running an image.
+
+USER appuser
+USER ec2-user
+
+---
+
+CMD : provides the default arguments for the container execution. Overrridden if arguments are passed when we are running container using "docker run" 
+
+CMD ["nginx", "-g", "daemon off;"]
+
+---
+
+ENTRYPOINT : Defines a command that always runs, even if arguments are passed with "docker run"
+
+ENTRYPOINT ["python", "app.py"]
+
+---
+
+ENV		--> Sets environment variables for use during the build and runtime.
+
+ENV	APP_ENV=production
+ENV	APP_ENV=uat
+
+---
+
+EXPOSE	--> We can defines the port number that the container listens on. It doesnt publish the port. 
+
+EXPORT 80
+
+---
+
+VOLUME	--> Creates a mount point and makes it as a persistent or shared volume.
+
+VOLUME /var/lib/mysql
+
+---
+
+LABEL	--> We can add metadata to the image
+
+LABEL maintener="avinash" version="1.1"
+
+---
+
+HEALTHCHECK		--> We can definea a command to check the container health at runtime.
+
+HEALTHCHECK CMD curl --fail http://localhost:80 || exit 1
+
+
+---
+
+Dockerfile
+
+---
+
+FROM python:3.15.0a1-alpine3.22
+
+LABEL owner="avinash@avinash.com"
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 80
+
+CMD ["python","app.py"]
+
+---
+
+
+docker build -t my-python-app:v1 .
+
+
+---
+
+Volumes : When we run a container, its file system is temporary. If you remove the container all data inside the container will loss.
+
+VOlumes = Peristant data storage.
+This volumes helps to keep data "outside of the container"..
+
+
+Volume : We can create volume by dokcer and we can mount it to the container..
+Bind Mount : We can map a host directory to the container.. 
+tmpfs mount: Stores data in RAM.. 
+
+
+docker volume ls			--> List the volumes we have in docker
+
+docker volume create my_data	--> Create a volume
+
+docker volume inspect my_data	--> Give volume info i.e; actual path where data is storing
+
+
+docker run -d --name mysql-db -v my_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MyPass@123 mysql:latest
+
+-v --> volume (my_data:/var/lib/mysql)
+
+---
+
+docker volume create shared_data
+
+cd /var/lib/docker/volumes/shared_data/_data
+
+created "index.html"
+
+docker run -d --name nginx-app -v shared_data:/usr/share/nginx/html/ -p 80:80 nginx:latest
+
+docker run -d --name httpd-app -v shared_data:/usr/local/apache2/htdocs -p 8080:80 httpd:latest
+
+---
+
+bind local
+
+cd /home/ec2-user
+mkdir myappdata
+Create some files i.e; index.html / other data
+
+docker run -d -p 80:80 -v /home/ec2-user/myappdata:/usr/share/nginx/html nginx
+
+
+##ReadOnly
+docker run -d -p 80:80 -v /home/ec2-user/myappdata:/usr/share/nginx/html:ro nginx
+
+---
+
+docker volume rm my_data	--> Remove the volume
+docker volume prune			--> Cleanup unused volume
+
+---
+
+
+docker build -t <name>:<tag> .			--> Docker file should be in same location (Dockerfile)
+
+docker build -t <name>:<tag> ./app		--> If Docker file is in diff location (Dockerfile)
+
+docker build -f Dockerfile.dev -t <name>:<tag> ./app --> Build with diff file name
+
+docker build --no-cache -t <name>:<tag> .		--> Forcefully rebuild all layers by ignoring the cached layers/data.
+
+docker build --label owner="Avinash" -t <name>:<tag> .		--> We can pass metadata
+
+
+---
+
+hub.docker.com			--> Signup
+
+
+Your password will be stored unencrypted in /root/.docker/config.json
+
+rm /root/.docker/config.json
+
+
+docker tag local-image-name:tag <docker-username>/imagename:tag
+
+docker push thipparthiavinash/mycalapp-awar05:latest
+
+
+=============
+
+We need Container Archiestrators primarily for 2 purposes..
+
+1. Auto Scaling (Just like ec2 auto scaling) : scales the containers count based on the load..
+2. Auto healing : Due to any issues, if any container fails, it creates another contianer quickly.
+
+--> Docker Swarm
+--> ECS (Elastic Container Service)
+--> Kubernetes / EKS (Elastic Kubernetes Service)
+
+
+ECR/DockerHub : These are the Repo services to store our images.
+
+ECS : 
+1. Cluster : Where our containers/Task/Workloads runs..
+2. Task Definition : Configuration settings for the task you are going to run in ECS Cluster.. (We can define settings i.e; Memory, CPU, Image URI)
+3. Task : Nothing but a container.. Task need 2 things 1. Cluster 2. Task Def...
+4. Service : Combination of tasks which is delivering same thing.. It has capability to maintain Desired count of no. of tasks.. Has capability to add tasks to Load Balancer and Auto Scaling..
+
+
+Fargate only : Serverless – you don't think about creating or managing servers. Great for most common workloads.
+
+Fargate and managed instances : Managed instances - Amazon ECS will manage patching and scaling on your behalf while giving you configurability about the types of instances. Great for more advanced workloads.
+Fargate and Self-managed instances
+
+Self-managed instances - you must ensure the instances are patched and scaled properly, and you have full control over the instances.
+
+---
+
+Step 1 : Create an ECS cluster.. Provide a name, Choose "enhanced logging".. THen create.. 
+
+Step 2 : Create a Task Definition (Name, ECS Task Role, ECS Task Execution role, ECR Image URI, Port Number, Logs)
+
+Step 3 : Now create a task using the Task definition and verify the output using the public IP.. Now terminate the task and observe the task recreation.??? It wont happen
+
+TO maintain desired count, you need to depends on "service".. 
+
+Step 4 ; create a Service, provide Task definition informaiton.. choose replica as 2 and choose the default vpc and enable public IP and test the output..
+
+Now, terminate one of the task and it should recreate automatically..
+
+=====
+
+ECS has 3 types of Deployment options..
+
+1. Fargate : AWS manages the servers
+2. EC2 : Our tasks runs inside an ec2 instance (AWS managed Instance, Customer managed)
+3. ECS Anywhere : We can run tasks on our own hardware.. 
+
+ECS works as orchestrator.. But compute capacity comes from customer..
+
+
+===
+
+
+
+curl --proto "https" -o "/tmp/ecs-anywhere-install.sh" "https://amazon-ecs-agent.s3.amazonaws.com/ecs-anywhere-install-latest.sh" && bash /tmp/ecs-anywhere-install.sh --region "ap-south-1" --cluster "myecscluster" --activation-id "2a9df9ee-4aea-4dca-95d6-5f728b0579a4" --activation-code "7zRXk/mUJWC3xQhhbvS2"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
