@@ -363,6 +363,24 @@ Task : Works Individually
 Service : Combination tasks.. Helps to integrate with other AWS services i.e; LB and ASG.. We can define Desired count.. 
 
 
+=====
+
+
+
+Created a VPC with 2 piblic and 2 private subnets
+
+Created below Endpoints in Private subnets..
+
+When our ECS workload is running inside a VPC's private subnets, We need to create some VPC Endpoints.. 
+
+ECR DKR (Docker Registry) Endpoint : 
+ECR API (For Autnentication) Endpoint : 
+Logs (Cloudwatch) Endpoint : To store task logs to cloudwatch 
+S3 gateway Endpoint : For Image layers 
+
+--> Create a LB in Public SUbnets..
+
+Now, Create a service and integrate with LB
 
 
 
