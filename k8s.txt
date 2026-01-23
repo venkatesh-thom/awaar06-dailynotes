@@ -1,0 +1,49 @@
+
+
+
+Manual Scaling and Managing the container is hard.. 
+If any container is down, manually we need to run again..
+Easy for lab/home workloads, but not suggestable to run production grade workload without Orchestators.. 
+
+Orchestrator: Auto Scaling, Self healing, Network setup, workload schedules..
+K8s
+
+K8s mainly contains 2 Parts:
+
+Control Plane Components : Brain of K8s..
+
+--> kube-apiserver / API Server : front door of the k8s.. (we use "kubectl" to communicate with api server )
+
+--> etcd (Database) : It contains all the cluster data.. Information stores in "Key and Value" (name=webserver)
+	Stores "Desired state" and "current state" of our k8s
+	
+--> Controller manager (kube-controller-manager) (Supervisor) : monitors "etcd" and helps to match the desired 	state..
+
+--> Scheduler (kube-scheduler) (Decision maker) : This decides at what "node" the workload should run/create.
+
+--> Cloud Controller manager (CCM) : helps to connect cloud provider's K8s cluster i.e; eks, aks, gke.. Loadbalancer.. Monitoring.. 
+
+----
+
+Worker Node Components : This is where our workload runs.. (ec2, fargate, server)
+
+--> kubelet : THis is an agent runs in each worker node.. This component talks to API Server.. If pod Crashes, kubelet restarts it automatically.. 
+
+--> Container Runtime : responsible to pull and run containers.. K8s uses "CRI-O" and "containerd".. Used to support Docker.
+kubelet asks the container runtime to pull the image based on the instructions it received from api-server. This runtime starts the container inside the pod.
+
+--> kube-proxy (network) : This componet manages the networking rules and pod communications.. This is responsible to allocate a unique IP address for every pod we run.. 
+
+---
+
+pod : Smallest deployable unit in K8s.. Pod is nothing but a wrapper to the container.. 
+
+
+
+
+
+
+
+
+
+
