@@ -38,6 +38,52 @@ kubelet asks the container runtime to pull the image based on the instructions i
 
 pod : Smallest deployable unit in K8s.. Pod is nothing but a wrapper to the container.. 
 
+Replica Set : 
+
+Deployment : 
+
+----
+
+EKS : Elastic Kubernetes Service : Fully managed K8s service provided by AWS. 
+
+Managed Control plane by AWS. AWS Provides HA and reliability to eks cluster as default option.
+We can integrate with other AWS services. (IRSA/VPC/ALB/ route53 / Cloudwatch)
+for HA, AWS maintains 3 copies of control plane components across 3 AZs.. 
+We dont get access to the control plane nodes managed by AWS.
+
+EKS Data Plane operation : Its the place where our workload runs.. 
+
+EC2 Self Managed Node group : 
+--> As a customer, we have to provision the ec2 instances, we have to configure the ec2 instances..!!
+--> We have to take care about the OS updates/ patches, Scaling activities.
+
+EC2 Managed Node group : 
+--> AWS automatically provision and managed the ec2 instances.
+--> AWS take care about the OS updates/ patches, Scaling activities.
+--> AWS uses Amazon Linux 2023 / Bottlerocket.
+--> We need to choose the required number of instances and instance type.
+
+AWS Auto-Mode : EKS Auto Mode extends AWS management of Kubernetes clusters beyond the cluster itself, to allow AWS to also set up and manage the infrastructure that enables the smooth operation of your workloads. You can delegate key infrastructure decisions and leverage the expertise of AWS for day-to-day operations. Cluster infrastructure managed by AWS includes many Kubernetes capabilities as core components, as opposed to add-ons, such as compute autoscaling, pod and service networking, application load balancing, cluster DNS, block storage, and GPU support.
+
+AWS fargate : Serverless, No nodes to manage, Directly we can deploy pods. pay-as-you-go.. 
+
+
+===========
+
+Most of the times, we use eksctl to create EKS cluster.. THis has some pre-req:
+
+1. aws cli tools install & configure		(aws.amazon.com/cli)
+2. kubectl									(https://kubernetes.io/docs/tasks/tools/)
+
+3. install eksctl
+https://docs.aws.amazon.com/eks/latest/eksctl/installation.html
+
+
+eksctl create cluster --name=mycluster --version 1.33 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type t3.micro --nodes 2 --managed
+
+
+
+
 
 
 
