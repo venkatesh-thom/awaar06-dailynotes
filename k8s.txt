@@ -79,13 +79,52 @@ Most of the times, we use eksctl to create EKS cluster.. THis has some pre-req:
 https://docs.aws.amazon.com/eks/latest/eksctl/installation.html
 
 
-eksctl create cluster --name=mycluster --version 1.33 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type t3.micro --nodes 2 --managed
+eksctl create cluster --name=ekswithavinash --version 1.34 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type c7i-flex.large --nodes 2 --node-ami-family=AmazonLinux2023 --managed
 
 
+----
+
+CNI : Container Network Interface		: THis is a network plugin.. This helps to extend the container network with existing network..
+
+VPC CNI : Virtual private Cloud Container Network interface : 
+
+--> IPAM (IP Address management)
+--> pod Networking
+--> k8s network polocies
+
+-----
+
+OIDC : IAM OpenID Connect : This allows AWS IAM to authenticate with K8s Service accounts, IAM Permissions / roles.
+
+aws eks describe-cluster --name ekswithavinash
+
+eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster ekswithavinash --approve
+
+EKS CLuster configuratio will be stored in our local laptop.. 
+Path : /Users/username/.kube/config
 
 
+aws eks update-kubeconfig --region ap-south-1 --name ekswithavinash
+
+---
+
+eksctl 		--> helps to create cluster
+kubectl 	--> helps to interact with k8s cluster
+
+kubectl get pods						--> Display pods from default namespace
+
+kubectl get pods -A						--> Display pods from ALL namespace
+kubectl get pods --all-namespaces		
 
 
+kubectl apply -f 01-pod.yaml			--> THis will create a pod
+kubectl apply -f 01-pod.yaml --dry-run=server	--> This will dry run (identify the potential issues before deploying)
+
+
+kubectl describe pods <pod-name>		
+
+
+eksctl delete cluster --name ekswithavinash			--> Delete your cluster
 
 
 
