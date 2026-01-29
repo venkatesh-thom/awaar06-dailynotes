@@ -82,6 +82,10 @@ https://docs.aws.amazon.com/eks/latest/eksctl/installation.html
 eksctl create cluster --name=ekswithavinash --version 1.34 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type c7i-flex.large --nodes 2 --node-ami-family=AmazonLinux2023 --managed
 
 
+
+eksctl create cluster --name=ekswithavinash-uat --version 1.34 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type c7i-flex.large --nodes 2 --node-ami-family=AmazonLinux2023 --managed
+
+
 ----
 
 CNI : Container Network Interface		: THis is a network plugin.. This helps to extend the container network with existing network..
@@ -125,6 +129,35 @@ kubectl describe pods <pod-name>
 
 
 eksctl delete cluster --name ekswithavinash			--> Delete your cluster
+
+kubectl delete pods <pod-name> <pod-name-2>			--> Deletes the pods
+
+
+kubectl logs <pod-name>								--> Displays the logs
+kubectl logs -f <pod-name>							--> Displays the live logs from pod
+
+kubectl describe pods <pod-name>					--> Displays the pods info inclusing the events
+
+
+
+Servcie : helps to expose the pods (internally / externally)
+
+
+kubectl get services
+kubectl get svc
+
+
+ClusterIP : We cannot expose it to outside world. THis is default svc, if we dont mention service type in manifest file.
+
+NodePort : Expose our workload outside using node/ec2-instance public IP.
+
+
+
+
+
+
+
+
 
 
 
