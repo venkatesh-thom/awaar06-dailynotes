@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: 2048-game
+spec:
+  containers:
+  - name: 2048game
+    image: 982424467695.dkr.ecr.ap-south-1.amazonaws.com/game-2048-awar06:latest
+    ports:
+    - containerPort: 80
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+      requests:
+        memory: "64Mi"
+        cpu: "250m"

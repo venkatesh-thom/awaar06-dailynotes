@@ -17,3 +17,10 @@ spec:
         image: 982424467695.dkr.ecr.ap-south-1.amazonaws.com/game-2048-awar06:latest
         ports:
         - containerPort: 80
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
