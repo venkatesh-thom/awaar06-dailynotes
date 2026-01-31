@@ -10,7 +10,7 @@ K8s
 
 K8s mainly contains 2 Parts:
 
-Control Plane Components : Brain of K8s..
+Control Plane Components : Brain of K8s.. Managed by AWS.. WE DONT HAVE OPTION TO CONNECT IT.. 
 
 --> kube-apiserver / API Server : front door of the k8s.. (we use "kubectl" to communicate with api server )
 
@@ -85,7 +85,7 @@ eksctl create cluster --name=ekswithavinash --version 1.34 --region ap-south-1 -
 
 eksctl create cluster --name=ekswithavinash --version 1.34 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type c7i-flex.large --nodes 2 --node-ami-family=AmazonLinux2023 --managed
 
-eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster ekswithavinash-uat --approve
+eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster ekswithavinash --approve
 
 
 ----
@@ -157,8 +157,6 @@ NodePort : Expose our workload outside using node/ec2-instance public IP.
 
 D: 30/01/2026
 
-
-
 LoadBalancer Service Type; This creates Classic Load Balncer in AWS..
 
 
@@ -208,10 +206,47 @@ OOM - Out of Memory
 
 namespace : NS is a logical isolated mechanism that allows us to group the resources within a cluster. 
 
+--> Multi-tenant : Multiple teams can use one cluster without involving other teams work..
+--> Resource Limits : We can apply resource quotas for proper workload management.. 
+
+kubectl get ns				--> TO list the namespaces
+
+default 		: our workload runs here, if we deploy without mentioning/creating any namespace.. 
+kube-system 	: K8s backend / system components / support core components runs here.. i.e; coredns, kube-proxy, metrics-server.. 
+kube-public 	: Publicly readable namespaces for cluster wide infromation..
+kube-node-lease	: manages the node heartbeat / ATT to track nodes availability..
 
 
 
+kubectl get all -n default			--> List all the workload from default ns
 
+kubectl get all -n kube-system
+
+
+kubectl get events					--> Lists the K8s events
+
+kubectl top pods 					--> Displays resource usage (cpu and memory)
+kubectl top pods -A					--> Displays resource usage (cpu and memory) from all namespaces
+
+kubectl top pod 2048-game --containers	--> Displays pods's containers CPU and memory usage
+
+kubectl top nodes					--> Displays Nodes CPU and Memory usage
+
+-------
+
+Imperative : We can pass instruction to the K8s on the go / now to perform something. 
+
+** kubectl set image deployment/2048-game-deployment 2048-container=nginx:latest
+** kubectl scale deployment 2048-game-deployment --replicas=3
+
+Declarative : We can do the changes in the manifest file that contains instruction about our workload. 
+
+---
+
+kubectl exec -it <pod> -- /bin/sh
+kubectl exec -it <pod> -- /bin/bash
+
+kubectl exec -it 2048-game -- /bin/sh
 
 
 
