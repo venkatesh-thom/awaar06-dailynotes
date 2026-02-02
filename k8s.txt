@@ -249,6 +249,84 @@ kubectl exec -it <pod> -- /bin/bash
 kubectl exec -it 2048-game -- /bin/sh
 
 
+==========
+
+Day - 71 | 02-02-2026
+
+
+DaemonSet : Daemonset ensures every node gets a pod (log collector, monitoring agents, network components/plugins).. 
+--> We use this for infra operations worklaods.. 
+
+--> One pod per node (Sometimes this setting affected by affinities / node selectors)
+--> Automatically creates and runs on New Nodes.. Deletes when node deleted.. 
+
+
+kubectl get nodes				--> Displays nodes
+kubectl get nodes -o wide		--> Detailed inforamtion about Nodes
+
+
+eksctl scale nodegroup --cluster ekswithavinash --name ng-default --nodes 3
+
+--
+
+StatefulSet : Its k8s controller, helps to manage stateful applications. 
+Every pod creates with statefulset get a "Persistent storage".. 
+gets name in an ordered manner
+Create and terminate pods in ordered manner
+
+
+PV : persistent Volume : Its a storage in the cluster / A dedicated service in AWS (EBS)..
+--> Treat it like a harddisk for our pod.
+--> Even pod deleted, the data in PV can stay.
+
+PVC : Persistent Volume Claim :  Its a request for storage, created by a pod. 
+Pod's cannot directly use PV and gets the storage. 
+We need to define Size and Storage Class.
+
+Pod --> Asks PVC for storage --> gets the matching storage from PV
+
+---
+
+PVC asks for:
+Size (e.g., 5Gi)
+Access mode (ReadWriteOnce / ReadWriteMany)
+Storage class (optional)
+Kubernetes then binds PVC → PV
+
+When PVC is created → Kubernetes controller creates a PV automatically.
+
+---
+
+Static Provisioning : Admin manually creates PVs first. PVC binds to an existing PV.
+
+Dynamic Provisioning : No PV exists. PVC + StorageClass → Kubernetes creates PV automatically.
+
+ReadWriteOnce (RWO) : Only 1 node can mount it	  : gp2, gp3
+ReadWriteMany (RWX) : Multiple nodes can read/write : NFS, EFS
+ReadOnlyMany  (ROX) : Multiple nodes read only 	  : Special cases
+
+---
+
+Amazon EBS CSI Driver : 
+
+CSI : Container Storage Interface : With the help of this plugin, k8s talks to EBS servcie.
+
+volumeMounts : Attach storage to container.
+mountPath: Where do you want to mount the volume inside the container.
+
+eksctl create iamserviceaccount --name ebs-csi-sa --namespace kube-system --cluster ekswithavinash --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy --approve --role-only --role-name AmazonEKS_EBS_Driver_Role
+
+
+eksctl create addon --name aws-ebs-csi-driver --cluster ekswithavinash --service-account-role-arn arn:aws:iam::982424467695:role/AmazonEKS_EBS_Driver_Role --force
+
+-------
+
+eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster ekswithavinash --approve
+
+eksctl create iamserviceaccount --name ebs-csi-controller-sa --namespace kube-system --cluster $cluster_name --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy --approve --role-only --role-name AmazonEKS_EBS_CSI_DriverRole
+
+eksctl create addon --name aws-ebs-csi-driver --cluster $cluster_name --service-account-role-arn arn:aws:iam::982424467695:role/AmazonEKS_EBS_CSI_DriverRole --force
+
 
 
 

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+  namespace: default
+spec:
+  serviceName: "nginx"            #this should match with headless service name
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template: 
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: mycontent
+          mountPath: /usr/share/nginx/html/
+  volumeClaimTemplates:
+  - metadata:
+      name: mycontent
+    spec: 
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: gp2
+      resources:
+        requests:
+          storage: 2Gi
