@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: 2048-game
+  labels:
+    name: 2048-game
+spec:
+  containers:
+  - name: 2048game
+    image: nginx
+    envFrom:
+    - configMapRef:
+        name: db-config
