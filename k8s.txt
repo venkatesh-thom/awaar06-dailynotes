@@ -371,6 +371,83 @@ helm history mynodeapp
 helm rollback mynodeapp <2>
 
 
+================
+
+D: 06/02/2026
+
+eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster ekswithavinash --approve
+
+Vertical Scaling : VPA
+
+Horizontal Scaling : 
+
+
+TO enable autoscale on the cluster.. 
+
+kubectl autoscale deployment php-apache --cpu=60% --min=1 --max=10
+
+kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
+
+
+-i --tty : Makes terminal interactive
+load-generator : name for the container we are creating
+--rm :Automatically deletes the container when its stopped
+--image=busybox:1.28 : a small linux container
+--restart=Never : It pos crashes, don't restart automatically
+-- /bin/sh -c : Run the shell command passed subseq
+
+"while sleep 0.01; do wget -q -O- http://php-apache; done"	--> 100 requests per second generates and hots the service.
+
+=========
+
+Cluster AutoScaler:
+
+When we decided to configure cluster autoscaler on our K8s, We need to add addl permisisons on "Node's IAM Role".. --> EKSCompute & asgfullaccess
+
+Also, We need to adjust the Min and Max count on our ASG settings.
+
+helm repo add autoscaler https://kubernetes.github.io/autoscaler
+helm repo update
+
+helm install cluster-autoscaler autoscaler/cluster-autoscaler --namespace kube-system --set awsRegion=ap-south-1 --set autoDiscovery.clusterName=ekswithavinash --set extraArgs.balance-similar-node-groups=true --set extraArgs.skip-nodes-with-system-pods=false
+
+helm upgrade cluster-autoscaler autoscaler/cluster-autoscaler --namespace kube-system --set awsRegion=ap-south-1 --set autoDiscovery.clusterName=ekswithavinash --set extraArgs.balance-similar-node-groups=true --set extraArgs.skip-nodes-with-system-pods=false
+
+
+Deploy php-apache and then scale it and observe the pod creation and NODE (instance instance) creation..
+
+kubectl scale deployments.apps php-apache --replicas=20
+
+=============
+
+VPA : Vertical pod AutoScaler 
+
+--> To add resources VPA need to terminate the pod, this may destrupt our applicaiton
+--> HPA and VPA wont work together.
+--> EKS/GKE/AKS dont support VPA... 
+
+git clone https://github.com/kubernetes/autoscaler.git
+cd /autoscaler/vertical-pod-autoscaler/hack/
+
+
+Lower Bound: Minimum required resources
+Target : Optimal resources allocation
+Uncapped Target: Best case without resource contraints
+Upper Bound: Max recommended resources (before wasting cpu/memory)
+
+==============
+
+
+Install goldilocks using helm chart
+
+https://charts.fairwinds.com/stable
+
+helm repo add fairwinds-stable https://charts.fairwinds.com/stable
+helm update
+
+
+
+
 
 
 
