@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolling-deploy
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 30           # Extended wait time
+  progressDeadlineSeconds: 600  # Allow more time for rollout
+  selector:
+    matchLabels:
+      app: rollingapp
+  template:
+    metadata:
+      labels:
+        app: rollingapp
+    spec:
+      containers:
+      - name: rollingapp
+        image: nginx:1.20
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          successThreshold: 3    # Require 3 successful checks

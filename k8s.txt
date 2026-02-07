@@ -445,13 +445,118 @@ https://charts.fairwinds.com/stable
 helm repo add fairwinds-stable https://charts.fairwinds.com/stable
 helm update
 
+kubectl create ns goldilocks
+
+helm install goldilocks --namespace goldilocks fairwinds-stable/goldilocks
 
 
+kubectl -n goldilocks port-forward svc/goldilocks-dashboard 8080:80
+  echo "Visit http://127.0.0.1:8080 to use your application"
+
+--
+
+enable goldilocks for required namespaces
+
+kubectl label ns default goldilocks.fairwinds.com/enabled=true
 
 
+========
+
+D: 07/02/202
+
+Rolling update : Update happens gradually, one group/pod at a time.
+--> No downtime
+--> user dont notice the changes
+--> most comonly used and safest "default" method.
+
+If we dont define any surge/unavaiable it picks 25% of our workload.
+
+--
+
+Recreate deployment : Old version is stopped completely and then new version starts..
+--> App goes down for a short period.
+--> Simple but cause some downtime
+
+---
+
+Canary Deployment : 
+
+New version shown to a small % of users first.if everything is good, we can increase the %.
+--> Multiple deployments need to perform.
+--> less risk when delivering new version of application.
+
+---
+
+Blue Green Environment:
+Blue -> Old
+Green --> New
+
+--> We need to run 2 versioned environments
+--> Very fast rollback, if new version didnt work.
+--> Switching the traffic instantly.
+
+---
 
 
+A/B testing : Two different version shown to different users.
+--> To Compare which verison is performing better.
+--> Both versions stay live.
 
+---
+
+Shadow / Mirroring Deployment : Real user traffic copied to new version silently (without informing / showing output to end customer).. 
+--> Users still sees old version.
+--> New version runs in background for internal testing.
+
+---
+
+Dark launch : Feture deployed, but hidden from users.
+Can be enabled anything easily.
+
+
+=========
+
+Deployment Controls:
+
+
+Affinities: We can choose "WHERE PODS SHOULD RUN"
+
+Node Affinity : I prefer to run my db worklaod on a node that is running with SSD storage.
+
+
+requiredDuringSchedulingIgnoredDuringExecution: Pod MUST run on a node labelled.
+key=disktype
+value=ssd
+
+
+kubectl label nodes ip-192-168-17-225.ap-south-1.compute.internal disktype=ssd
+
+kubectl get pods -o wide
+
+---
+
+pod affinity : whatever the pods we are deploying, those stick together.
+
+pod anti-affinity : Pods spread out. It wont run on same node.
+
+
+podAntiAffinity
+preferredDuringSchedulingIgnoredDuringExecution: two pods with label app=web cannot run on the same node.
+
+
+--
+
+Taint (node) : Like a bus seat, marked as "reserved"
+Tolaration (Pod) : The special pass that lets the passenger to sit on "reserved" seat.
+
+
+Step 1 : Add a label to a "NODE", so that we can force our pod to run on that specific node using "NodeSelector"
+
+Step 2 : taint the same node.
+
+kubectl taint nodes ip-192-168-17-225.ap-south-1.compute.internal role=db:NoSchedule
+
+to remove taint: kubectl taint nodes ip-192-168-17-225.ap-south-1.compute.internal role=db:NoSchedule-
 
 
 
