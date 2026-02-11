@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-generator
+  labels:
+    app: load-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: load-generator
+  template:
+    metadata:
+      labels:
+        app: load-generator
+    spec:
+      containers:
+        - name: load-generator
+          image: jordi/ab
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TARGET_URL
+              value: "http://sample-nginx-service.default.svc.cluster.local/"
+            - name: REQUESTS
+              value: "10000"
+            - name: CONCURRENCY
+              value: "200"
+            - name: SLEEP_SECS
+              value: "5"
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "128Mi"
+            limits:
+              cpu: "1000m"
+              memory: "512Mi"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              echo "[load-generator] starting. target=${TARGET_URL} requests=${REQUESTS} concurrency=${CONCURRENCY}"
+              while true; do
+                echo "---- $(date -u) - START ab run ----"
+                ab -n ${REQUESTS} -c ${CONCURRENCY} ${TARGET_URL} 2>&1 || echo "[load-generator] ab failed with exit $?"
+                echo "---- $(date -u) - END ab run ----"
+                echo "[load-generator] sleeping ${SLEEP_SECS}s"
+                sleep ${SLEEP_SECS}
+              done
