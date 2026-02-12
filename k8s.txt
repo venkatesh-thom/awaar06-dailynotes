@@ -641,7 +641,7 @@ kubectl rollout restart deployment web-app
 ======================
 
 
-eksctl create cluster --name=ekswithavinash --version 1.34 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type c7i-flex.large --nodes 1 --node-ami-family=AmazonLinux2023 --managed
+eksctl create cluster --name=ekswithavinash --version 1.34 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type c7i-flex.large --nodes 2 --node-ami-family=AmazonLinux2023 --managed
 
 eksctl create cluster --name=ekswithavinash-uat --version 1.34 --region ap-south-1 --zones=ap-south-1a,ap-south-1b --nodegroup-name ng-default --node-type c7i-flex.large --nodes 1 --node-ami-family=AmazonLinux2023 --managed
 
@@ -702,6 +702,31 @@ kubectl get pods
 Add "Cloudwatchagentserverpolicy" to the node groups/ec2 instance iam role.
 
 aws eks create-addon --addon-name amazon-cloudwatch-observability --cluster-name ekswithavinash --region ap-south-1
+
+
+=================
+
+D: 12/02/2026
+
+Prometheus : Opensource monitoring syatem that collect and stores the logs.
+
+--> Stores all the info in "Time Series DB"
+--> PromQL to query the logs
+--> We can configure "alert manager" to send alerts. (Email: ses, Sendgrid, mailchimp, easy sendy pro) / Slack
+
+Grafana : Its a Opensource visualisation and dashboard generation tool..
+--> Grafana dont have capabilities to collect the logs, It uses Prom as data source and gives visualisation to that logs.. 
+LogSource : Prometheous, Cloudwatch, Elasticsearch, mysql, loki.. 
+
+
+----------
+
+
+eksctl create cluster --name ekswithavinash-fg --region ap-south-1 --version 1.34 --fargate
+
+kubectl create ns nginx
+
+eksctl create fargateprofile --cluster ekswithavinash-fg --name nginx-fg --namespace nginx
 
 
 
