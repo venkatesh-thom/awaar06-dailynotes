@@ -1,0 +1,49 @@
+
+
+minikube : designed to run single node k8s cluster in local environments. runs based on a container runtime i.e; docker.. 
+Testing or training..
+
+minikube and docker should run as non-root user.. 
+
+sudo dnf install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ec2-user
+newgrp docker						--> apply group changes to docker group
+
+Install docker
+Install kubectl
+Install minikubes
+
+minikube start --drive=docker
+
+minikube config set driver docker
+
+minikube status
+
+minikube start
+
+minikube stop
+
+minikube delete
+
+minikube delete && minikube start
+
+
+======
+
+KOPS : 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
